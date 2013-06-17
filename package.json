@@ -1,15 +1,15 @@
 {
   "name": "generator-anthracite",
   "version": "0.0.0",
-  "description": "A generator for Yeoman",
+  "description": "Another take on an Ember generator for Yeoman",
   "keywords": [
     "yeoman-generator"
   ],
   "homepage": "https://github.com/geekingreen/generator-anthracite",
   "bugs": "https://github.com/geekingreen/generator-anthracite/issues",
   "author": {
-    "name": "",
-    "email": "",
+    "name": "Isaac Gifford",
+    "email": "isaac@geekingreen.com",
     "url": "https://github.com/geekingreen"
   },
   "main": "app/index.js",
