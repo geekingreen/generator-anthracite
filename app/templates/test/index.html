@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Mocha Spec Runner</title>
+    <link rel="stylesheet" href="components/mocha/mocha.css">
+
+    <script src="components/jquery/jquery.js"></script>
+    <script src="components/handlebars/handlebars.runtime.js"></script>
+    <script src="components/ember/ember.js"></script>
+    <script src="components/ember-data/index.js"></script>
+
+  </head>
+
+  <body>
+    <div id="mocha"></div>
+    <div id="ember"></div>
+
+    <script src="components/mocha/mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
+
+    <script src="components/chai/chai.js"></script>
+    <script>var expect = chai.expect</script>
+
+    <script src="app/app.js"></script>
+    <script src="app/compiled-templates.js"></script>
+
+    <script src="spec/spec.js"></script>
+
+    <script>mocha.run()</script>
+  </body>
+
+</html>
+
