@@ -18,43 +18,43 @@ var AnthraciteGenerator = module.exports = function AnthraciteGenerator(args, op
 
 util.inherits(AnthraciteGenerator, yeoman.generators.Base);
 
-AnthraciteGenerator.prototype.welcome = function welcome () {
+AnthraciteGenerator.prototype.welcome = function welcome() {
   // welcome message
-  var logo = 
-    '\n              ..............'+
-    '\n           ....................'+
-    '\n       ..........................`'+
-    '\n     ...............'+';;;;;;;;:'.green+'......'+
-    '\n    .............'+':;;;;;;;;;;;;;'.green+'.....'+
-    '\n    ............'+',;;;;:'.green+'.....'+':;;,'.green+'.....'+
-    '\n    `...........'+';;;;'.green+'.........,......`'+
-    '\n    `..........'+';;;'.green+'...................'+
-    '\n    ..........'+',;;;'.green+'......'+':;;;;;;;;'.green+'....'+
-    '\n    ..........'+',;;;'.green+'......'+':;;;;;;;;'.green+'....'+
-    '\n     ..........'+';;;'.green+'...........'+':;;;'.green+'....'+
-    '\n    ............'+';;;;'.green+'.........'+';;;;'.green+'...'+
-    '\n   .............'+',;;;;:'.green+'.....'+':;;;;'.green+'....'+
-    '\n  ................'+',;;;;;;;;;;;'.green+'....`'+
-    '\n ..................'+'.;;;;;;;;:'.green+'.....'+       
-    '\n `......................,........'+        
-    '\n    ............................'+         
-    '\n    `...........................'+         
-    '\n       ...........................'+       
-    '\n        ..........................`'+
-    '\n         `...........................'+
-    '\n               `.....................`'+
+  var logo =
+    '\n              ..............' +
+    '\n           ....................' +
+    '\n       ..........................`' +
+    '\n     ...............' + ';;;;;;;;:'.green + '......' +
+    '\n    .............' + ':;;;;;;;;;;;;;'.green + '.....' +
+    '\n    ............' + ',;;;;:'.green + '.....' + ':;;,'.green + '.....' +
+    '\n    `...........' + ';;;;'.green + '.........,......`' +
+    '\n    `..........' + ';;;'.green + '...................' +
+    '\n    ..........' + ',;;;'.green + '......' + ':;;;;;;;;'.green + '....' +
+    '\n    ..........' + ',;;;'.green + '......' + ':;;;;;;;;'.green + '....' +
+    '\n     ..........' + ';;;'.green + '...........' + ':;;;'.green + '....' +
+    '\n    ............' + ';;;;'.green + '.........' + ';;;;'.green + '...' +
+    '\n   .............' + ',;;;;:'.green + '.....' + ':;;;;'.green + '....' +
+    '\n  ................' + ',;;;;;;;;;;;'.green + '....`' +
+    '\n ..................' + '.;;;;;;;;:'.green + '.....' +
+    '\n `......................,........' +
+    '\n    ............................' +
+    '\n    `...........................' +
+    '\n       ...........................' +
+    '\n        ..........................`' +
+    '\n         `...........................' +
+    '\n               `.....................`' +
     '\n                 www.geekingreen.com'.green;
 
   var status =
-    '\n'
-    +'\nAnthracite will generate an app with the name: "'
-    +this._.classify(this.appname)+'"\nin the folder:'
-    +' "'+this.env.cwd+'"\n';
+    '\n' +
+    '\nAnthracite will generate an app with the name: "' +
+    this._.classify(this.appname) + '"\nin the folder:' +
+    ' "' + this.env.cwd + '"\n';
 
   console.log(logo, status);
 };
 
-AnthraciteGenerator.prototype.askFor = function askFor() {
+AnthraciteGenerator.prototype.proceed = function proceed() {
   var cb = this.async();
 
   var prompts = [
@@ -71,12 +71,58 @@ AnthraciteGenerator.prototype.askFor = function askFor() {
 
     this.generate = props.generate.match(/y/i);
 
-    if (this.generate) cb();
+    if (this.generate) { cb(); }
 
   }.bind(this));
 };
 
-AnthraciteGenerator.prototype.writeIndex = function() {
+AnthraciteGenerator.prototype.askForMongo = function askForMongo() {
+  var cb = this.async();
+
+  var prompts = [
+    {
+      name: 'mongodb',
+      message: 'Would you like to use mongodb as your backend? [y/n]'
+    }
+  ];
+
+  this.prompt(prompts, function (err, props) {
+    if (err) {
+      return this.emit('error', err);
+    }
+
+    this.mongodb = props.mongodb.match(/y/i);
+
+    cb();
+
+  }.bind(this));
+};
+
+AnthraciteGenerator.prototype.askForSQL = function askForSQL() {
+  if (!this.mongodb) {
+    var cb = this.async();
+
+    var prompts = [
+      {
+        name: 'nodeorm',
+        message: 'Would you like to use SQL (MySQL, PostgreSQL, Redshift, SQLite) as your backend? [y/n]'
+      }
+    ];
+
+    this.prompt(prompts, function (err, props) {
+      if (err) {
+        return this.emit('error', err);
+      }
+
+      this.nodeorm = props.nodeorm.match(/y/i);
+
+      cb();
+
+    }.bind(this));
+  }
+};
+
+AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
   this.indexFile = this.appendFiles({
     html: this.indexFile,
     fileType: 'css',
@@ -107,7 +153,7 @@ AnthraciteGenerator.prototype.writeIndex = function() {
   ], null, ['tmp']);
 };
 
-AnthraciteGenerator.prototype.app = function app () {
+AnthraciteGenerator.prototype.app = function app() {
   this.write('app/index.html', this.indexFile);
 
   // Copy app
@@ -134,13 +180,25 @@ AnthraciteGenerator.prototype.app = function app () {
   this.template('app/modules/main/views/index.js');
 };
 
-AnthraciteGenerator.prototype.test = function test () {
+AnthraciteGenerator.prototype.server = function server() {
+  if (this.mongodb) {
+    this.template('server/models/message-mongo.js', 'server/models/message.js');
+    this.template('server/mongoapi.js');
+  }
+
+  if (this.nodeorm) {
+    this.template('server/models/message-orm.js', 'server/models/message.js');
+    this.template('server/mysqlapi.js');
+  }
+};
+
+AnthraciteGenerator.prototype.test = function test() {
   this.template('test/index.html');
   this.template('test/main.js');
   this.template('test/spec/index_spec.js');
 };
 
-AnthraciteGenerator.prototype.assets = function assets () {
+AnthraciteGenerator.prototype.assets = function assets() {
   this.mkdir('assets');
   this.mkdir('assets/img');
   this.mkdir('assets/styles');
@@ -149,12 +207,13 @@ AnthraciteGenerator.prototype.assets = function assets () {
   this.copy('assets/styles/style.css', 'assets/styles/style.css');
 };
 
-AnthraciteGenerator.prototype.gruntfile = function gruntfile () {
+AnthraciteGenerator.prototype.gruntfile = function gruntfile() {
   this.template('Gruntfile.js');
   this.copy('anthracite/grunt.js', 'anthracite/grunt.js');
 };
 
-AnthraciteGenerator.prototype.projectfiles = function projectfiles () {
+AnthraciteGenerator.prototype.projectfiles = function projectfiles() {
+  this.template('README.md');
   this.template('package.json');
   this.template('bower.json');
 
