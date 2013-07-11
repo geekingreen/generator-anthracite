@@ -31,7 +31,8 @@
   },
   "licenses": [
     {
-      "type": "MIT"
+      "type": "MIT",
+      "url": "http://en.wikipedia.org/wiki/MIT_License"
     }
   ]
 }
