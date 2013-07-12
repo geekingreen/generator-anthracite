@@ -18,6 +18,7 @@ module.exports = function (grunt) {
       'emberTemplates',
       'neuter:app',
       'less:dev',
+      'sass:dev',
       'copy:dev'
     ],
     test: [

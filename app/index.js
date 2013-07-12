@@ -122,15 +122,50 @@ AnthraciteGenerator.prototype.askForSQL = function askForSQL() {
   }
 };
 
+AnthraciteGenerator.prototype.askForFoundation = function askForFoundation() {
+  var cb = this.async();
+
+  var prompts = [
+    {
+      name: 'zurbFoundation',
+      message: 'Would you like to use Zurb\'s Foundation framework? [y/n]'
+    }
+  ];
+
+  this.prompt(prompts, function (err, props) {
+    if (err) {
+      return this.emit('error', err);
+    }
+
+    this.zurbFoundation = props.zurbFoundation.match(/y/i);
+
+    cb();
+
+  }.bind(this));
+};
+
 AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
+  var cssFiles = ['components/normalize-css/normalize.css'];
+  var jsFiles = [
+    'components/jquery/jquery.js',
+    'components/handlebars/handlebars.runtime.js',
+    'components/ember/ember.js',
+    'components/ember-data/index.js'
+  ];
+
+  if (this.zurbFoundation) {
+    cssFiles.push('assets/styles/components/foundation/scss/foundation.css');
+    jsFiles.push('components/foundation/js/foundation/foundation.js');
+  }
+
+  // Put style.css last so that it will override others
+  cssFiles.push('assets/styles/style.css');
+
   this.indexFile = this.appendFiles({
     html: this.indexFile,
     fileType: 'css',
     optimizedPath: 'assets/styles/main.css',
-    sourceFileList: [
-      'components/normalize-css/normalize.css',
-      'assets/styles/style.css'
-    ],
+    sourceFileList: cssFiles,
     searchPath: 'tmp'
   });
 
@@ -138,12 +173,7 @@ AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
     html: this.indexFile,
     fileType: 'js',
     optimizedPath: 'scripts/components.js',
-    sourceFileList: [
-      'components/jquery/jquery.js',
-      'components/handlebars/handlebars.runtime.js',
-      'components/ember/ember.js',
-      'components/ember-data/index.js'
-    ],
+    sourceFileList: jsFiles,
     searchPath: '.'
   });
 

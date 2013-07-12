@@ -175,8 +175,8 @@ module.exports = {
       dev: {
         files: [{
           expand: true,
-          cwd: "assets/styles",
-          src: ["**/*.scss", "**/*.sass"],
+          cwd: ".",
+          src: ["assets/styles/**/*.scss", "assets/styles/**/*.sass"<% if (zurbFoundation) { %>, "components/foundation/scss/foundation.scss"<% } %>],
           dest: "tmp/assets/styles",
           ext: ".css"
         }]
@@ -184,8 +184,8 @@ module.exports = {
       dist: {
         files: [{
           expand: true,
-          cwd: "assets/styles",
-          src: ["**/*.scss", "**/*.sass"],
+          cwd: ".",
+          src: ["assets/styles/**/*.scss", "assets/styles/**/*.sass"<% if (zurbFoundation) { %>, "components/foundation/scss/foundation.scss"<% } %>],
           dest: "tmp/assets/styles",
           ext: ".css"
         }],
@@ -271,7 +271,7 @@ module.exports = {
         // "app/modules/my_module/templates/bar/foo.hbs" => "my_module/bar/foo"
         // "app/templates/foo.hbs" => "foo"
         // "app/partials/foo" => "_foo"
-        // "app/modules/my_module/partials/bar.hbs" => "_my_module.bar"
+        // "app/modules/my_module/partials/bar.hbs" => "my_module/_bar"
         templateName: function (sourceFile) {
           console.log('Compiling: '.green + sourceFile);
 
