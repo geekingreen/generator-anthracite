@@ -30,7 +30,6 @@ module.exports = function (grunt) {
       'neuter:app',
       'less:dist',
       'sass:dist',
-      'copy:dev',
       'copy:dist',
       'imagemin',
       'svgmin',

@@ -149,7 +149,7 @@ AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
   var jsFiles = [
     'components/jquery/jquery.js',
     'components/handlebars/handlebars.runtime.js',
-    'components/ember/ember.js',
+    'components/ember-shim/ember.js',
     'components/ember-data/index.js'
   ];
 
@@ -247,6 +247,7 @@ AnthraciteGenerator.prototype.projectfiles = function projectfiles() {
   this.template('package.json');
   this.template('bower.json');
 
+  this.copy('bowerrc', '.bowerrc');
   this.copy('editorconfig', '.editorconfig');
   this.copy('jshintrc', '.jshintrc');
 };

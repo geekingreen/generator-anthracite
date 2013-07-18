@@ -20,7 +20,7 @@ util.inherits(ModuleGenerator, yeoman.generators.NamedBase);
 ModuleGenerator.prototype.module = function module() {
   this.underscored = this._.underscored(this.name);
 
-  var directory = "app/modules/" + this.underscored + "/";
+  var directory = "app/modules/" + this.name.toLowerCase() + "/";
 
   this.template('routes/index.js', directory + 'routes/index.js');
   this.template('controllers/index.js', directory + 'controllers/index.js');
