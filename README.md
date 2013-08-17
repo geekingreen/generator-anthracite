@@ -1,6 +1,9 @@
 # generator-anthracite
 A different take on an Ember generator for yeoman.
 
+## Updates
+- Removed bowerrc in favor of default bower_components folder
+
 ## Getting started
 - Make sure you have [yo](https://github.com/yeoman/yo) installed:
     `npm install -g yo`

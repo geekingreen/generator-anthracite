@@ -145,17 +145,17 @@ AnthraciteGenerator.prototype.askForFoundation = function askForFoundation() {
 };
 
 AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
-  var cssFiles = ['components/normalize-css/normalize.css'];
+  var cssFiles = ['bower_components/normalize-css/normalize.css'];
   var jsFiles = [
-    'components/jquery/jquery.js',
-    'components/handlebars/handlebars.runtime.js',
-    'components/ember-shim/ember.js',
-    'components/ember-data/index.js'
+    'bower_components/jquery/jquery.js',
+    'bower_components/handlebars/handlebars.runtime.js',
+    'bower_components/ember-shim/ember.js',
+    'bower_components/ember-data/index.js'
   ];
 
   if (this.zurbFoundation) {
-    cssFiles.push('assets/styles/components/foundation/scss/foundation.css');
-    jsFiles.push('components/foundation/js/foundation/foundation.js');
+    cssFiles.push('assets/styles/bower_components/foundation/scss/foundation.css');
+    jsFiles.push('bower_components/foundation/js/foundation/foundation.js');
   }
 
   // Put style.css last so that it will override others
@@ -247,7 +247,6 @@ AnthraciteGenerator.prototype.projectfiles = function projectfiles() {
   this.template('package.json');
   this.template('bower.json');
 
-  this.copy('bowerrc', '.bowerrc');
   this.copy('editorconfig', '.editorconfig');
   this.copy('jshintrc', '.jshintrc');
 };
