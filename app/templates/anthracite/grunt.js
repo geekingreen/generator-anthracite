@@ -176,7 +176,7 @@ module.exports = {
         files: [{
           expand: true,
           cwd: ".",
-          src: ["assets/styles/**/*.scss", "assets/styles/**/*.sass"<% if (zurbFoundation) { %>, "components/foundation/scss/foundation.scss"<% } %>],
+          src: ["assets/styles/**/*.scss", "assets/styles/**/*.sass"<% if (zurbFoundation) { %>, "bower_components/foundation/scss/foundation.scss"<% } %>],
           dest: "tmp/assets/styles",
           ext: ".css"
         }]
@@ -185,7 +185,7 @@ module.exports = {
         files: [{
           expand: true,
           cwd: ".",
-          src: ["assets/styles/**/*.scss", "assets/styles/**/*.sass"<% if (zurbFoundation) { %>, "components/foundation/scss/foundation.scss"<% } %>],
+          src: ["assets/styles/**/*.scss", "assets/styles/**/*.sass"<% if (zurbFoundation) { %>, "bower_components/foundation/scss/foundation.scss"<% } %>],
           dest: "tmp/assets/styles",
           ext: ".css"
         }],
@@ -334,7 +334,7 @@ module.exports = {
           // copy uncompiled app js to /tmp for debugging (source maps)
           { expand: true, dest: 'tmp/app', src: ['app/**'] },
 
-          { expand: true, dest: 'tmp/', src: ['components/**'] }
+          { expand: true, dest: 'tmp/', src: ['bower_components/**'] }
         ]
       },
       test: {
