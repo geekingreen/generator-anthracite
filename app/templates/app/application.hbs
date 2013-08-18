@@ -1,9 +1,11 @@
 <div class="container">
     <div class="row">
-        <div class="large-12 columns">
+        <div class="<% if (twbs) { %>col-lg-12<% } else { %>large-12 columns<% } %>">
             <div class="panel">
-                <h1><%= _.classify(appname) %></h1>
-                <p>Generated with anthracite</p>
+                <% if (twbs) { %><div class="panel-body"><% } %>
+                    <h1><%= _.classify(appname) %></h1>
+                    <p>Generated with anthracite</p>
+                <% if (twbs) { %></div><% } %>
             </div>
             {{outlet}}
         </div>

@@ -122,7 +122,7 @@ AnthraciteGenerator.prototype.askForSQL = function askForSQL() {
   }
 };
 
-AnthraciteGenerator.prototype.askForFoundation = function askForFoundation() {
+AnthraciteGenerator.prototype.askForAddons = function askForAddons() {
   var cb = this.async();
 
   var prompts = [
@@ -149,6 +149,29 @@ AnthraciteGenerator.prototype.askForFoundation = function askForFoundation() {
   }.bind(this));
 };
 
+AnthraciteGenerator.prototype.askForBootstrap = function askForBootstrap() {
+  if (!this.zurbFoundation) {
+    var cb = this.async();
+
+    var prompts = [
+      {
+        name: 'twbs',
+        message: 'Would you like to use Twitter Bootstrap 3? [y/n]'
+      }
+    ];
+
+    this.prompt(prompts, function (err, props) {
+      if (err) {
+        return this.emit('error', err);
+      }
+
+      this.twbs = props.twbs.match(/y/i);
+
+      cb();
+    }.bind(this));
+  }
+};
+
 AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
   var cssFiles = ['bower_components/normalize-css/normalize.css'];
   var jsFiles = [
@@ -161,6 +184,10 @@ AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
   if (this.zurbFoundation) {
     cssFiles.push('assets/styles/bower_components/foundation/scss/foundation.css');
     jsFiles.push('bower_components/foundation/js/foundation/foundation.js');
+  }
+  if (this.twbs) {
+    cssFiles.push('bower_components/bootstrap/dist/css/bootstrap.css');
+    jsFiles.push('bower_components/bootstrap/dist/js/bootstrap.js');
   }
 
   // Put style.css last so that it will override others

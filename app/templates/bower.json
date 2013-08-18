@@ -6,8 +6,9 @@
     <% if (epf) { %>"epf-shim": "0.1.3",
     <% } else { %>"ember-data": "http://builds.emberjs.com.s3.amazonaws.com/ember-data-0.13.js",<% } %>
     "handlebars": "1.0.0",
-    "normalize-css": "~2.1.1"<% if (zurbFoundation) { %>,
-    "foundation": "~4.3.1"<% } %>
+    <% if (zurbFoundation) { %>"foundation": "~4.3.1",<% } %>
+    <% if (twbs) { %>"bootstrap": "3.0.0-rc.2",<% } %>
+    "normalize-css": "~2.1.1"
   },
   "devDependencies": {
     "mocha": "~1.12.0",
