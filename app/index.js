@@ -169,6 +169,8 @@ AnthraciteGenerator.prototype.askForBootstrap = function askForBootstrap() {
 
       cb();
     }.bind(this));
+  } else {
+    this.twbs = false;
   }
 };
 
