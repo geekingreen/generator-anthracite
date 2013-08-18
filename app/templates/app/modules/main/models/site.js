@@ -1,3 +1,9 @@
+<% if (epf) { %>
+<%= _.classify(appname) %>.Site = Ep.Model.extend({
+  title: Ep.attr('string'),
+  url: Ep.attr('string')
+});
+<% } else { %>
 <%= _.classify(appname) %>.Site = DS.Model.extend({
   title: DS.attr('string'),
   url: DS.attr('string')
@@ -15,3 +21,4 @@
     url: 'http://reddit.com'
   }
 ];
+<% } %>

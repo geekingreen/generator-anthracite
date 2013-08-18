@@ -127,6 +127,10 @@ AnthraciteGenerator.prototype.askForFoundation = function askForFoundation() {
 
   var prompts = [
     {
+      name: 'epf',
+      message: 'Would you like to use Ember Persistence Foundation instead of Ember Data?'
+    },
+    {
       name: 'zurbFoundation',
       message: 'Would you like to use Zurb\'s Foundation framework? [y/n]'
     }
@@ -138,6 +142,7 @@ AnthraciteGenerator.prototype.askForFoundation = function askForFoundation() {
     }
 
     this.zurbFoundation = props.zurbFoundation.match(/y/i);
+    this.epf = props.epf.match(/y/i);
 
     cb();
 
@@ -150,7 +155,7 @@ AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
     'bower_components/jquery/jquery.js',
     'bower_components/handlebars/handlebars.runtime.js',
     'bower_components/ember-shim/ember.js',
-    'bower_components/ember-data/index.js'
+    'bower_components/' + (this.epf ? 'epf-shim/epf.js' : 'ember-data/index.js')
   ];
 
   if (this.zurbFoundation) {
