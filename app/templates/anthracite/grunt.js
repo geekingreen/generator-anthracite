@@ -128,19 +128,10 @@ module.exports = {
 
     // Testing
     // ------------------
-    mocha: {
+    qunit: {
       all: {
         options: {
-          run: true,
           urls: ['http://localhost:<%%= connect.options.port %>/index.html']
-        }
-      }
-    },
-    jasmine: {
-      all: {
-        /*src: '',*/
-        options: {
-          specs: 'test/spec/{,*/}*.js'
         }
       }
     },

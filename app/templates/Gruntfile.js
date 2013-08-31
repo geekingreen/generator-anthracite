@@ -62,7 +62,7 @@ module.exports = function (grunt) {
     'copy:dev',
     'copy:test',
     'connect:test',
-    'mocha'
+    'qunit'
   ]);
 
   grunt.registerTask('test-server', [

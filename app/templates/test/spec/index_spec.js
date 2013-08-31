@@ -1,20 +1,12 @@
-describe("Index", function() {
-  beforeEach(function () {
-    Ember.run(<%= _.classify(appname) %>, <%= _.classify(appname) %>.advanceReadiness);
-  });
-  afterEach(function (done) {
+module("Index", {
+  setup: function () {
     <%= _.classify(appname) %>.reset();
-    done();
-  });
+  }
+});
 
-  it("contains the words 'Welcome to Ember.js on Charcoal'", function(done) {
-    visit("/").then(function() {
-      expect($("#ember h1").html()).to.be.equal("<%= _.classify(appname) %>");
-      done();
-
-      // finishes loading fixtures so Ember Data doesn't throw an error after
-      // App.reset() in teardown
-      Ember.run.sync();
-    });
+test("First H1 contains <%= _.classify(appname) %>", function () {
+  visit('/').then(function () {
+    equal($('#ember h1').html(), '<%= _.classify(appname) %>', 'Title is <%= _.classify(appname) %>');
   });
 });
+
