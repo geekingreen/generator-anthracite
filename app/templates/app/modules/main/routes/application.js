@@ -1,4 +1,4 @@
-<%= _.classify(appname) %>.IndexRoute = Ember.Route.extend({
+<%= _.classify(appname) %>.ApplicationRoute = Ember.Route.extend({
   setupController: function (controller, model) {
     <% if (epf) { %>
     this.session.merge(this.session.create('site', { id: '1', title: 'geekingreen.com', url: 'http://geekingreen.com' }));
