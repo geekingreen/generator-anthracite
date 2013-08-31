@@ -266,11 +266,12 @@ module.exports = {
     emberTemplates: {
       options: {
         // "app/application.hbs" => "application"
-        // "app/modules/my_module/templates/index.hbs" => "my_module"
+        // "app/modules/my_module/templates/my_module.hbs" => "my_module"
+				// "app/modules/my_module/templates/index.hbs" => "my_module/index"
         // "app/modules/my_module/templates/foo.hbs" => "my_module/foo"
         // "app/modules/my_module/templates/bar/foo.hbs" => "my_module/bar/foo"
         // "app/templates/foo.hbs" => "foo"
-        // "app/partials/foo" => "_foo"
+        // "app/partials/foo.hbs" => "_foo"
         // "app/modules/my_module/partials/bar.hbs" => "my_module/_bar"
         templateName: function (sourceFile) {
           console.log('Compiling: '.green + sourceFile);
@@ -284,7 +285,7 @@ module.exports = {
 
           // app/modules/main/templates/index.handlebars => "index"
           if (moduleName && !isMainModule) {
-            if (fileName === "index") {
+            if (fileName === moduleName) {
               return moduleName;
             } else {
               if (isPartial) return moduleName+'/'+prefix+fileName;
