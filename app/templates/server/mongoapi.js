@@ -105,7 +105,7 @@ app.options('*', function(req, res) {
 });
 
 /*
-    ADD YOUR MODELS HERE
+  ADD YOUR MODELS HERE
 */
 emberfyModel(app, require('./models/message')(mongoose), 'message', 'messages');
 

@@ -14,7 +14,7 @@
       // Currently EPF's LocalAdapter doesn't support finding more than one model at a time...
       return [this.session.find('todo', 1), this.session.find('todo', 2)]; <%
     } else { %>
-      return <%=_.classify(appname) %>.Todo.find(); <%
+      return this.store.find('todo'); <%
     } %>
   }
 });

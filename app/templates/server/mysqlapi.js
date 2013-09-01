@@ -13,8 +13,8 @@ orm.settings.set('instance.returnAllErrors', true);
 
 var ssl_options = false;
 // var ssl_options = {
-// 	key: fs.readFileSync('server-key.pem'),
-// 	cert: fs.readFileSync('server-crt.pem')
+//  key: fs.readFileSync('server-key.pem'),
+//  cert: fs.readFileSync('server-crt.pem')
 // };
 
 function emberfyModel(app, modelName, modelPlural) {
@@ -101,8 +101,8 @@ app.configure(function() {
   app.use(orm.express(CONNECTION_STRING, {
     define: function(db, models) {
       /*
-				ADD YOUR MODELS HERE
-			*/
+        ADD YOUR MODELS HERE
+      */
       models.message = require('./models/message')(orm, db);
       emberfyModel(app, 'message', 'messages');
 

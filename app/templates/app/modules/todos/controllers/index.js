@@ -10,7 +10,7 @@
         this.session.merge(todo);
         this.get('controllers.todos').pushObject(todo); <%
       } else { %>
-        <%= _.classify(appname) %>.Todo.createRecord({
+        this.store.createRecord('todo', {
           name: 'Get r done'
         }); <%
       } %>
@@ -31,7 +31,7 @@
           this.session.flush(); <%
         } else { %>
           todo.deleteRecord();
-          todo.save(); <%
+          //todo.save(); <%
         } %>
       }
     }

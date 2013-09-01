@@ -31,7 +31,7 @@
       item.session.flush();
       <% } else { %>
       item.deleteRecord();
-      item.save();
+      //item.save();
       <% } %>
     }
   }

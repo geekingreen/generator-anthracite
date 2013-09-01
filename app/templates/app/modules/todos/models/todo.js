@@ -11,11 +11,11 @@ if (epf) { %>
   });
 
   <%= _.classify(appname) %>.Todo.FIXTURES = [{
-    id: 1,
+    id: 'a',
     name: 'Walk the dog',
     isDone: false
   }, {
-    id: 2,
+    id: 'b',
     name: 'Buy groceries',
     isDone: false
   }]; <%
