@@ -1,0 +1,5 @@
+<div class="todo-item" {{bindAttr class="item.isDone:done"}}>
+	{{input class="todo-checkbox" type="checkbox" checked=item.isDone}}
+	<span class="todo-editable" {{action edit}}>{{item.name}}</span>
+	<a href="#" class="todo-delete" {{action delete}} title="Delete todo">&times;</a>
+</div>

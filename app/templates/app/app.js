@@ -2,8 +2,9 @@
 window.<%= _.classify(appname) %> = Ember.Application.create({
 });
 
-// Load mixins before anything else
+// Load mixins and components before anything else
 require('mixins/*');
+require('components/*');
 
 require('store');
 require('modules/*/models/*');

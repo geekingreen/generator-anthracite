@@ -15,11 +15,11 @@
                 {{/each}}
             </ul>
             <% } else { %>
-            <dd class="sub-nav">
+            <dl class="sub-nav">
                 {{#each}}
                     {{partial link}}
                 {{/each}}
-            </dd>
+            </dl>
             <% } %>
         </div>
         <div class="<% if (twbs) { %>col-lg-12<% } else { %>large-12 columns<% } %>">

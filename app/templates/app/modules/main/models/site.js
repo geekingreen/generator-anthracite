@@ -19,6 +19,11 @@
     id: 2,
     title: 'Contact',
     link: 'contact'
+  },
+  {
+    id: 3,
+    title: 'Todos',
+    link: 'todos'
   }
 ];
 <% } %>
