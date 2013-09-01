@@ -2,7 +2,7 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-
+var colors = require('colors');
 
 var AnthraciteGenerator = module.exports = function AnthraciteGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
