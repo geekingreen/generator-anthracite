@@ -1,29 +1,33 @@
 <div class="container">
-    <div class="row">
-        <div class="<% if (twbs) { %>col-lg-12<% } else { %>large-12 columns<% } %>">
-            <div class="panel">
-                <% if (twbs) { %><div class="panel-body"><% } %>
-                    {{#link-to 'index'}}<h1><%= _.classify(appname) %></h1>{{/link-to}}
-                <% if (twbs) { %></div><% } %>
-            </div>
-        </div>
-        <div class="<% if (twbs) { %>col-lg-12<% } else { %>large-12 columns<% } %>">
-            <% if (twbs) { %>
-            <ul class="nav nav-pills">
-                {{#each}}
-                    {{partial link}}
-                {{/each}}
-            </ul>
-            <% } else { %>
-            <dl class="sub-nav">
-                {{#each}}
-                    {{partial link}}
-                {{/each}}
-            </dl>
-            <% } %>
-        </div>
-        <div class="<% if (twbs) { %>col-lg-12<% } else { %>large-12 columns<% } %>">
-            {{outlet}}
-        </div>
+  <div class="row">
+    <div class="<% if (twbs) { %>col-lg-12<% } else { %>large-12 columns<% } %>">
+      <div class="panel"> <%
+      if (twbs) { %>
+        <div class="panel-body"> <%
+      } %>
+        {{#link-to 'index'}}<h1><%= _.classify(appname) %></h1>{{/link-to}} <%
+      if (twbs) { %>
+        </div> <%
+      } %>
+      </div>
     </div>
+    <div class="<% if (twbs) { %>col-lg-12<% } else { %>large-12 columns<% } %>"> <%
+    if (twbs) { %>
+      <ul class="nav nav-pills">
+        {{#each}}
+          {{partial link}}
+        {{/each}}
+      </ul> <%
+    } else { %>
+      <dl class="sub-nav">
+        {{#each}}
+          {{partial link}}
+        {{/each}}
+      </dl> <%
+    } %>
+    </div>
+    <div class="<% if (twbs) { %>col-lg-12<% } else { %>large-12 columns<% } %>">
+      {{outlet}}
+    </div>
+  </div>
 </div>
