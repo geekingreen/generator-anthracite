@@ -11,11 +11,24 @@ A different take on an Ember generator for yeoman.
 - Run: `yo anthracite`
 - To generate additional modules run: `yo anthracite:module <module name>`
 
+## Components
+There is a global components directory where you can put all of your
+custom ember components "app/components".
+
+## Mixins
+There is a global mixins directory as well at "app/mixins".
+
+You can namespace your mixins (so they don't conflict with anything)
+by editing "app.js" and adding:
+
+    `App.Mixins = Ember.Namespace.create()`
+
 ## Modules
 #### *Module*
 Each module will automatically namespace its templates like this:
 
-* "app/modules/module/templates/index.hbs" => "module"
+* "app/modules/module/tempaltes/module.hbs" => "module"
+* "app/modules/module/templates/index.hbs" => "module/index"
 * "app/modules/module/templates/foo.hbs" => "module/foo"
 * "app/modules/module/templates/foo/bar.hbs" => "module/foo/bar"
 
