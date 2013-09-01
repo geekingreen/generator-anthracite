@@ -226,6 +226,10 @@ AnthraciteGenerator.prototype.app = function app() {
   this.template('app/store.js');
   this.template('app/router.js');
 
+  // Components
+  this.template('app/components/todo-item.hbs');
+  this.template('app/components/todo-item.js');
+
   // Global templates
   this.mkdir('app/partials');
   this.mkdir('app/templates');
@@ -234,14 +238,23 @@ AnthraciteGenerator.prototype.app = function app() {
   this.template('app/helpers/wordCount.js');
 
   // Copy main module
-  this.template('app/modules/main/controllers/index.js');
+  this.template('app/modules/main/controllers/application.js');
   this.template('app/modules/main/controllers/about.js');
   this.template('app/modules/main/models/site.js');
-  this.template('app/modules/main/partials/myPartial.hbs');
-  this.template('app/modules/main/routes/index.js');
+  this.template('app/modules/main/partials/link.hbs');
+  this.template('app/modules/main/routes/application.js');
   this.template('app/modules/main/templates/index.hbs');
   this.template('app/modules/main/templates/about.hbs');
+  this.template('app/modules/main/templates/contact.hbs');
   this.template('app/modules/main/views/index.js');
+
+  // Copy todos module
+  this.template('app/modules/todos/controllers/todos.js');
+  this.template('app/modules/todos/controllers/index.js');
+  this.template('app/modules/todos/models/todo.js');
+  this.template('app/modules/todos/routes/todos.js');
+  this.template('app/modules/todos/templates/index.hbs');
+  this.template('app/modules/todos/templates/todos.hbs');
 };
 
 AnthraciteGenerator.prototype.server = function server() {

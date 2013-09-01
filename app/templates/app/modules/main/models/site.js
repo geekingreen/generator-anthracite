@@ -1,24 +1,29 @@
 <% if (epf) { %>
 <%= _.classify(appname) %>.Site = Ep.Model.extend({
   title: Ep.attr('string'),
-  url: Ep.attr('string')
+  link: Ep.attr('string')
 });
 <% } else { %>
 <%= _.classify(appname) %>.Site = DS.Model.extend({
   title: DS.attr('string'),
-  url: DS.attr('string')
+  link: DS.attr('string')
 });
 
 <%= _.classify(appname) %>.Site.FIXTURES = [
   {
     id: 1,
-    title: 'geekingreen.com',
-    url: 'http://geekingreen.com'
+    title: 'About',
+    link: 'about'
   },
   {
     id: 2,
-    title: 'Reddit',
-    url: 'http://reddit.com'
+    title: 'Contact',
+    link: 'contact'
+  },
+  {
+    id: 3,
+    title: 'Todos',
+    link: 'todos'
   }
 ];
 <% } %>
