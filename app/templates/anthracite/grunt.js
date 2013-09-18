@@ -348,7 +348,7 @@ module.exports = {
           },
           {
             expand: true,
-            src: ['assets/img/{,*/}*.{png,jpg,jpeg,gif,webp}'],
+            src: ['assets/img/{,*/}*.{ico,png,jpg,jpeg,gif,webp}'],
             dest: 'dist/'
           },
           {
