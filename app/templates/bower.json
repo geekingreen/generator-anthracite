@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "dependencies": {
     "ember-shim": "1.0.0",
-    <% if (epf) { %>"epf-shim": "0.1.3",
-    <% } else { %>"ember-data": "http://builds.emberjs.com.s3.amazonaws.com/daily/20130901/ember-data.js",<% } %>
+    <% if (epf) { %>"epf-shim": "0.1.4",
+    <% } else { %>"ember-data-shim": "1.0.0-beta.2",<% } %>
     "handlebars": "1.0.0",
     <% if (zurbFoundation) { %>"foundation": "~4.3.1",<% } %>
     <% if (twbs) { %>"bootstrap": "3.0.0-rc.2",<% } %>

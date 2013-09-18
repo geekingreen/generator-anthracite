@@ -180,7 +180,7 @@ AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
     'bower_components/jquery/jquery.js',
     'bower_components/handlebars/handlebars.runtime.js',
     'bower_components/ember-shim/ember.js',
-    'bower_components/' + (this.epf ? 'epf-shim/epf.js' : 'ember-data/index.js')
+    'bower_components/' + (this.epf ? 'epf-shim/epf.js' : 'ember-data-shim/ember-data.js')
   ];
 
   if (this.zurbFoundation) {

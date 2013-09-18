@@ -10,9 +10,10 @@
         this.session.merge(todo);
         this.get('controllers.todos').pushObject(todo); <%
       } else { %>
-        this.store.createRecord('todo', {
+        var newTodo = this.store.createRecord('todo', {
           name: 'Get r done'
-        }); <%
+        });
+        newTodo.save(); <%
       } %>
     },
 
@@ -31,7 +32,7 @@
           this.session.flush(); <%
         } else { %>
           todo.deleteRecord();
-          //todo.save(); <%
+          todo.save(); <%
         } %>
       }
     }
