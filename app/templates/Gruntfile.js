@@ -79,10 +79,10 @@ module.exports = function (grunt) {
     'clean:dist',
     'useminPrepare',
     'concurrent:dist',
+    'copy:dev',
     'concat',
     'cssmin',
     'uglify',
-    'copy:dev',
     'rev',
     'usemin'
   ]);
