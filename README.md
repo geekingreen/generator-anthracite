@@ -27,7 +27,7 @@ by editing "app.js" and adding:
 #### *Module*
 Each module will automatically namespace its templates like this:
 
-* "app/modules/module/tempaltes/module.hbs" => "module"
+* "app/modules/module/templates/module.hbs" => "module"
 * "app/modules/module/templates/index.hbs" => "module/index"
 * "app/modules/module/templates/foo.hbs" => "module/foo"
 * "app/modules/module/templates/foo/bar.hbs" => "module/foo/bar"
