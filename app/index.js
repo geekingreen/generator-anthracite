@@ -5,295 +5,329 @@ var yeoman = require('yeoman-generator');
 var colors = require('colors');
 
 var AnthraciteGenerator = module.exports = function AnthraciteGenerator(args, options, config) {
-  yeoman.generators.Base.apply(this, arguments);
+	yeoman.generators.Base.apply(this, arguments);
 
-  this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+	this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
 
-  this.on('end', function () {
-    this.installDependencies({ skipInstall: options['skip-install'] });
-  });
+	this.on('end', function () {
+		this.installDependencies({
+			skipInstall: options['skip-install']
+		});
+	});
 
-  this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+	this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
 util.inherits(AnthraciteGenerator, yeoman.generators.Base);
 
 AnthraciteGenerator.prototype.welcome = function welcome() {
-  // welcome message
-  var logo =
-    '\n              ..............' +
-    '\n           ....................' +
-    '\n       ..........................`' +
-    '\n     ...............' + ';;;;;;;;:'.green + '......' +
-    '\n    .............' + ':;;;;;;;;;;;;;'.green + '.....' +
-    '\n    ............' + ',;;;;:'.green + '.....' + ':;;,'.green + '.....' +
-    '\n    `...........' + ';;;;'.green + '.........,......`' +
-    '\n    `..........' + ';;;'.green + '...................' +
-    '\n    ..........' + ',;;;'.green + '......' + ':;;;;;;;;'.green + '....' +
-    '\n    ..........' + ',;;;'.green + '......' + ':;;;;;;;;'.green + '....' +
-    '\n     ..........' + ';;;'.green + '...........' + ':;;;'.green + '....' +
-    '\n    ............' + ';;;;'.green + '.........' + ';;;;'.green + '...' +
-    '\n   .............' + ',;;;;:'.green + '.....' + ':;;;;'.green + '....' +
-    '\n  ................' + ',;;;;;;;;;;;'.green + '....`' +
-    '\n ..................' + '.;;;;;;;;:'.green + '.....' +
-    '\n `......................,........' +
-    '\n    ............................' +
-    '\n    `...........................' +
-    '\n       ...........................' +
-    '\n        ..........................`' +
-    '\n         `...........................' +
-    '\n               `.....................`' +
-    '\n                 www.geekingreen.com'.green;
+	// welcome message
+	var logo =
+		'\n              ..............' +
+		'\n           ....................' +
+		'\n       ..........................`' +
+		'\n     ...............' + ';;;;;;;;:'.green + '......' +
+		'\n    .............' + ':;;;;;;;;;;;;;'.green + '.....' +
+		'\n    ............' + ',;;;;:'.green + '.....' + ':;;,'.green + '.....' +
+		'\n    `...........' + ';;;;'.green + '.........,......`' +
+		'\n    `..........' + ';;;'.green + '...................' +
+		'\n    ..........' + ',;;;'.green + '......' + ':;;;;;;;;'.green + '....' +
+		'\n    ..........' + ',;;;'.green + '......' + ':;;;;;;;;'.green + '....' +
+		'\n     ..........' + ';;;'.green + '...........' + ':;;;'.green + '....' +
+		'\n    ............' + ';;;;'.green + '.........' + ';;;;'.green + '...' +
+		'\n   .............' + ',;;;;:'.green + '.....' + ':;;;;'.green + '....' +
+		'\n  ................' + ',;;;;;;;;;;;'.green + '....`' +
+		'\n ..................' + '.;;;;;;;;:'.green + '.....' +
+		'\n `......................,........' +
+		'\n    ............................' +
+		'\n    `...........................' +
+		'\n       ...........................' +
+		'\n        ..........................`' +
+		'\n         `...........................' +
+		'\n               `.....................`' +
+		'\n                 www.geekingreen.com'.green;
 
-  var status =
-    '\n' +
-    '\nAnthracite will generate an app with the name: "' +
-    this._.classify(this.appname) + '"\nin the folder:' +
-    ' "' + this.env.cwd + '"\n';
+	var status =
+		'\n' +
+		'\nAnthracite will generate an app with the default name: "' +
+		this._.classify(this.appname) + '"\nin the folder:' +
+		' "' + this.env.cwd + '"\n';
 
-  console.log(logo, status);
+	console.log(logo, status);
 };
 
 AnthraciteGenerator.prototype.proceed = function proceed() {
-  var cb = this.async();
+	var cb = this.async();
 
-  var prompts = [
-    {
-      name: 'generate',
-      message: 'Would you like to continue? [y/n]'
-    }
-  ];
+	var prompts = [{
+		name: 'appName',
+		message: 'If you would like to rename the app enter the name here, otherwise press enter?'
+	}];
 
-  this.prompt(prompts, function (err, props) {
-    if (err) {
-      return this.emit('error', err);
-    }
+	this.prompt(prompts, function (err, props) {
+		if (err) {
+			return this.emit('error', err);
+		}
 
-    this.generate = props.generate.match(/y/i);
+		if (props.appName.trim().length) {
+			this.appname = props.appName;
+		}
 
-    if (this.generate) { cb(); }
+		cb();
 
-  }.bind(this));
+	}.bind(this));
 };
 
 AnthraciteGenerator.prototype.askForMongo = function askForMongo() {
-  var cb = this.async();
+	var cb = this.async();
 
-  var prompts = [
-    {
-      name: 'mongodb',
-      message: 'Would you like to use mongodb as your backend? [y/n]'
-    }
-  ];
+	var prompts = [{
+		name: 'mongodb',
+		message: 'Would you like to use mongodb as your backend? [y/n]'
+	}];
 
-  this.prompt(prompts, function (err, props) {
-    if (err) {
-      return this.emit('error', err);
-    }
+	this.prompt(prompts, function (err, props) {
+		if (err) {
+			return this.emit('error', err);
+		}
 
-    this.mongodb = props.mongodb.match(/y/i);
+		this.mongodb = props.mongodb.match(/y/i);
 
-    cb();
+		cb();
 
-  }.bind(this));
+	}.bind(this));
 };
 
 AnthraciteGenerator.prototype.askForSQL = function askForSQL() {
-  if (!this.mongodb) {
-    var cb = this.async();
+	if (!this.mongodb) {
+		var cb = this.async();
 
-    var prompts = [
-      {
-        name: 'nodeorm',
-        message: 'Would you like to use SQL (MySQL, PostgreSQL, Redshift, SQLite) as your backend? [y/n]'
-      }
-    ];
+		var prompts = [{
+			name: 'nodeorm',
+			message: 'Would you like to use SQL (MySQL, PostgreSQL, Redshift, SQLite) as your backend? [y/n]'
+		}];
 
-    this.prompt(prompts, function (err, props) {
-      if (err) {
-        return this.emit('error', err);
-      }
+		this.prompt(prompts, function (err, props) {
+			if (err) {
+				return this.emit('error', err);
+			}
 
-      this.nodeorm = props.nodeorm.match(/y/i);
+			this.nodeorm = props.nodeorm.match(/y/i);
 
-      cb();
+			cb();
 
-    }.bind(this));
-  }
+		}.bind(this));
+	}
 };
 
 AnthraciteGenerator.prototype.askForAddons = function askForAddons() {
-  var cb = this.async();
+	var cb = this.async();
 
-  var prompts = [
-    {
-      name: 'epf',
-      message: 'Would you like to use Ember Persistence Foundation instead of Ember Data?'
-    },
-    {
-      name: 'zurbFoundation',
-      message: 'Would you like to use Zurb\'s Foundation framework? [y/n]'
-    }
-  ];
+	var prompts = [{
+		name: 'epf',
+		message: 'Would you like to use Ember Persistence Foundation instead of Ember Data? [y/n]'
+	}, {
+		name: 'zurbFoundation',
+		message: 'Would you like to use Zurb\'s Foundation framework? [y/n]'
+	}];
 
-  this.prompt(prompts, function (err, props) {
-    if (err) {
-      return this.emit('error', err);
-    }
+	this.prompt(prompts, function (err, props) {
+		if (err) {
+			return this.emit('error', err);
+		}
 
-    this.zurbFoundation = props.zurbFoundation.match(/y/i);
-    this.epf = props.epf.match(/y/i);
+		this.zurbFoundation = props.zurbFoundation.match(/y/i);
+		this.epf = props.epf.match(/y/i);
 
-    cb();
+		cb();
 
-  }.bind(this));
+	}.bind(this));
 };
 
 AnthraciteGenerator.prototype.askForBootstrap = function askForBootstrap() {
-  if (!this.zurbFoundation) {
-    var cb = this.async();
+	if (!this.zurbFoundation) {
+		var cb = this.async();
 
-    var prompts = [
-      {
-        name: 'twbs',
-        message: 'Would you like to use Twitter Bootstrap 3? [y/n]'
-      }
-    ];
+		var prompts = [{
+			name: 'twbs',
+			message: 'Would you like to use Twitter Bootstrap 3? [y/n]'
+		}];
 
-    this.prompt(prompts, function (err, props) {
-      if (err) {
-        return this.emit('error', err);
-      }
+		this.prompt(prompts, function (err, props) {
+			if (err) {
+				return this.emit('error', err);
+			}
 
-      this.twbs = props.twbs.match(/y/i);
+			this.twbs = props.twbs.match(/y/i);
 
-      cb();
-    }.bind(this));
-  } else {
-    this.twbs = false;
-  }
+			cb();
+		}.bind(this));
+	}
+	else {
+		this.twbs = false;
+	}
+};
+
+AnthraciteGenerator.prototype.askEmpty = function askEmpty() {
+	var cb = this.async();
+
+	var prompts = [{
+		name: 'empty',
+		message: 'Would you like an example application? [y/n]'
+	}];
+
+	this.prompt(prompts, function (err, props) {
+		if (err) {
+			return this.emit('error', err);
+		}
+
+		this.empty = props.empty.match(/n/i);
+		cb();
+	}.bind(this));
 };
 
 AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
-  var cssFiles = ['bower_components/normalize-css/normalize.css'];
-  var jsFiles = [
-    'bower_components/jquery/jquery.js',
-    'bower_components/handlebars/handlebars.runtime.js',
-    'bower_components/ember-shim/ember.js',
-    'bower_components/' + (this.epf ? 'epf-shim/epf.js' : 'ember-data-shim/ember-data.js')
-  ];
+	var cssFiles = ['bower_components/normalize-css/normalize.css'];
+	var jsFiles = [
+		'bower_components/jquery/jquery.js',
+		'bower_components/handlebars/handlebars.runtime.js',
+		'bower_components/ember-shim/ember.js',
+		'bower_components/' + (this.epf ? 'epf-shim/epf.js' : 'ember-data-shim/ember-data.js')
+	];
 
-  if (this.zurbFoundation) {
-    cssFiles.push('assets/styles/bower_components/foundation/scss/foundation.css');
-    jsFiles.push('bower_components/foundation/js/foundation/foundation.js');
-  }
-  if (this.twbs) {
-    cssFiles.push('bower_components/bootstrap/dist/css/bootstrap.css');
-    jsFiles.push('bower_components/bootstrap/dist/js/bootstrap.js');
-  }
+	if (this.zurbFoundation) {
+		cssFiles.push('assets/styles/bower_components/foundation/scss/foundation.css');
+		jsFiles.push('bower_components/foundation/js/foundation/foundation.js');
+	}
+	if (this.twbs) {
+		cssFiles.push('bower_components/bootstrap/dist/css/bootstrap.css');
+		jsFiles.push('bower_components/bootstrap/dist/js/bootstrap.js');
+	}
 
-  // Put style.css last so that it will override others
-  cssFiles.push('assets/styles/style.css');
+	// Put style.css last so that it will override others
+	cssFiles.push('assets/styles/style.css');
 
-  this.indexFile = this.appendFiles({
-    html: this.indexFile,
-    fileType: 'css',
-    optimizedPath: 'assets/styles/main.css',
-    sourceFileList: cssFiles,
-    searchPath: 'tmp'
-  });
+	this.indexFile = this.appendFiles({
+		html: this.indexFile,
+		fileType: 'css',
+		optimizedPath: 'assets/styles/main.css',
+		sourceFileList: cssFiles,
+		searchPath: 'tmp'
+	});
 
-  this.indexFile = this.appendFiles({
-    html: this.indexFile,
-    fileType: 'js',
-    optimizedPath: 'scripts/components.js',
-    sourceFileList: jsFiles,
-    searchPath: '.'
-  });
+	this.indexFile = this.appendFiles({
+		html: this.indexFile,
+		fileType: 'js',
+		optimizedPath: 'scripts/components.js',
+		sourceFileList: jsFiles,
+		searchPath: '.'
+	});
 
-  this.indexFile = this.appendFiles(this.indexFile, 'js', 'scripts/main.js', [
-    'app/app.js',
-    'app/compiled-templates.js'
-  ], null, ['tmp']);
+	this.indexFile = this.appendFiles(this.indexFile, 'js', 'scripts/main.js', [
+		'app/app.js',
+		'app/compiled-templates.js'
+	], null, ['tmp']);
 };
 
 AnthraciteGenerator.prototype.app = function app() {
-  this.write('app/index.html', this.indexFile);
+	this.write('app/index.html', this.indexFile);
 
-  // Copy app
-  this.template('app/app.js');
-  this.template('app/application.hbs');
-  this.template('app/store.js');
-  this.template('app/router.js');
+	// Copy app
+	this.template('app/app.js');
+	this.template('app/application.hbs');
+	this.template('app/store.js');
+	this.template('app/router.js');
 
-  // Components
-  this.template('app/components/todo-item.hbs');
-  this.template('app/components/todo-item.js');
+	if (!this.empty) {
+		// Components
+		this.template('app/components/todo-item.hbs');
+		this.template('app/components/todo-item.js');
+	}
+	else {
+		this.mkdir('app/components');
+	}
 
-  // Global templates
-  this.mkdir('app/partials');
-  this.mkdir('app/templates');
+	// Global templates
+	this.mkdir('app/partials');
+	this.mkdir('app/templates');
 
-  // Copy helpers
-  this.template('app/helpers/wordCount.js');
+	if (!this.empty) {
+		// Copy helpers
+		this.template('app/helpers/wordCount.js');
+	}
+	else {
+		this.mkdir('app/helpers');
+	}
 
-  // Copy main module
-  this.template('app/modules/main/controllers/application.js');
-  this.template('app/modules/main/controllers/about.js');
-  this.template('app/modules/main/models/site.js');
-  this.template('app/modules/main/partials/link.hbs');
-  this.template('app/modules/main/routes/application.js');
-  this.template('app/modules/main/templates/index.hbs');
-  this.template('app/modules/main/templates/about.hbs');
-  this.template('app/modules/main/templates/contact.hbs');
-  this.template('app/modules/main/views/index.js');
+	if (!this.empty) {
+		// Copy main module
+		this.template('app/modules/main/controllers/application.js');
+		this.template('app/modules/main/controllers/about.js');
+		this.template('app/modules/main/models/site.js');
+		this.template('app/modules/main/partials/link.hbs');
+		this.template('app/modules/main/routes/application.js');
+		this.template('app/modules/main/templates/index.hbs');
+		this.template('app/modules/main/templates/about.hbs');
+		this.template('app/modules/main/templates/contact.hbs');
+		this.template('app/modules/main/views/index.js');
 
-  // Copy todos module
-  this.template('app/modules/todos/controllers/todos.js');
-  this.template('app/modules/todos/controllers/index.js');
-  this.template('app/modules/todos/models/todo.js');
-  this.template('app/modules/todos/routes/todos.js');
-  this.template('app/modules/todos/templates/index.hbs');
-  this.template('app/modules/todos/templates/todos.hbs');
+		// Copy todos module
+		this.template('app/modules/todos/controllers/todos.js');
+		this.template('app/modules/todos/controllers/index.js');
+		this.template('app/modules/todos/models/todo.js');
+		this.template('app/modules/todos/routes/todos.js');
+		this.template('app/modules/todos/templates/index.hbs');
+		this.template('app/modules/todos/templates/todos.hbs');
+	}
+	else {
+		this.mkdir('app/modules');
+		this.mkdir('app/modules/main');
+		this.mkdir('app/modules/main/controllers');
+		this.mkdir('app/modules/main/models');
+		this.mkdir('app/modules/main/partials');
+		this.mkdir('app/modules/main/routes');
+		this.mkdir('app/modules/main/templates');
+		this.mkdir('app/modules/main/views');
+	}
 };
 
 AnthraciteGenerator.prototype.server = function server() {
-  if (this.mongodb) {
-    this.template('server/models/message-mongo.js', 'server/models/message.js');
-    this.template('server/mongoapi.js');
-  }
+	if (this.mongodb) {
+		this.template('server/models/message-mongo.js', 'server/models/message.js');
+		this.template('server/mongoapi.js');
+	}
 
-  if (this.nodeorm) {
-    this.template('server/models/message-orm.js', 'server/models/message.js');
-    this.template('server/mysqlapi.js');
-  }
+	if (this.nodeorm) {
+		this.template('server/models/message-orm.js', 'server/models/message.js');
+		this.template('server/mysqlapi.js');
+	}
 };
 
 AnthraciteGenerator.prototype.test = function test() {
-  this.template('test/index.html');
-  this.template('test/main.js');
-  this.template('test/spec/index_spec.js');
+	this.template('test/index.html');
+	this.template('test/main.js');
+	this.template('test/spec/index_spec.js');
 };
 
 AnthraciteGenerator.prototype.assets = function assets() {
-  this.mkdir('assets');
-  this.mkdir('assets/img');
-  this.mkdir('assets/styles');
-  this.mkdir('assets/styles/fonts');
+	this.mkdir('assets');
+	this.mkdir('assets/img');
+	this.mkdir('assets/styles');
+	this.mkdir('assets/styles/fonts');
 
-  this.copy('assets/styles/style.css', 'assets/styles/style.css');
+	this.template('assets/styles/style.css');
 };
 
 AnthraciteGenerator.prototype.gruntfile = function gruntfile() {
-  this.template('Gruntfile.js');
-  this.copy('anthracite/grunt.js', 'anthracite/grunt.js');
+	this.template('Gruntfile.js');
+	this.copy('anthracite/grunt.js', 'anthracite/grunt.js');
 };
 
 AnthraciteGenerator.prototype.projectfiles = function projectfiles() {
-  this.template('README.md');
-  this.template('package.json');
-  this.template('bower.json');
+	this.template('README.md');
+	this.template('package.json');
+	this.template('bower.json');
 
-  this.copy('editorconfig', '.editorconfig');
-  this.copy('jshintrc', '.jshintrc');
+	this.copy('editorconfig', '.editorconfig');
+	this.copy('jshintrc', '.jshintrc');
 };
