@@ -1,3 +1,4 @@
+<% if(!empty) { %>
 /* your styles here */
 .todo-item {
   border: 1px solid green;
@@ -16,3 +17,4 @@
   float: right;
   font-weight: bold;
 }
+<% } %>
