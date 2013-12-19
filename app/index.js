@@ -215,8 +215,7 @@ AnthraciteGenerator.prototype.app = function app() {
 	this.template('index.js');
 	this.template('app.js');
 	this.template('app/application.js');
-	this.template('app/config/store.js');
-	this.template('app/config/router.js');
+	this.directory('app/config');
 
 	// Config and dependency files
 	this.template('package.json');
@@ -235,10 +234,14 @@ AnthraciteGenerator.prototype.app = function app() {
 
 	if (!this.empty) {
 		this.directory('app/assets');
+
 		this.directory('app/components');
 		this.directory('app/helpers');
-		this.directory('app/modules');
+		this.directory('app/initializers');
+		this.directory('app/mixins');
 		this.directory('app/partials');
+
+		this.directory('app/modules');
 	}
 	else {
 		// Just create the directories if example is declined

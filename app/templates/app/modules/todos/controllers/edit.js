@@ -1,11 +1,11 @@
-<%= _.classify(appname) %>.TodosEditController = Ember.ObjectController.extend({
+<%= _.classify(appname) %>.TodosEditController = Ember.ObjectController.extend(<%= _.classify(appname) %>.TodoModalMixin, {
 	actions: {
 		save: function (modal) {
 			var controller = this,
 				person = this.get('model');
 
 			person.save().then(function () {
-				hideModal(modal, controller);
+				controller.closeModal.call(controller, modal);
 			});
 		},
 
@@ -14,7 +14,7 @@
 
 			person.rollback();
 
-			hideModal(model, this);
+			this.closeModal.call(this, modal);
 		}
 	}
 });
