@@ -8,7 +8,7 @@ server.configure(function() {
 });
 
 require('./app')(server);
-require('./server')(server);
+<% if(serverExample) { %>require('./server')(server);<% } %>
 
 if (NODE_ENV === 'production') {
 	server.listen(8001, 'localhost');

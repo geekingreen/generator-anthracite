@@ -1,0 +1,11 @@
+<% if (twitterBootstrap) { %>
+<li {{bindAttr class=":list-group-item todo.done"}}>
+	{{input type="checkbox" checked=todo.done}}
+	{{#link-to 'todos.edit' todo}}{{todo.title}}{{/link-to}}
+</li>
+<% } else if (zurbFoundation) { %>
+<li {{bindAttr class="todo.done"}}>
+	{{input type="checkbox" checked=todo.done}}
+	{{#link-to 'todos.edit' todo}}{{todo.title}}{{/link-to}}
+</li>
+<% } %>
