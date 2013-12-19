@@ -1,0 +1,35 @@
+<% if (twitterBootstrap) { %>
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" aria-hidden="true" {{action 'cancel' view}}>&times;</button>
+			<h4 class="modal-title">Todo</h4>
+		</div>
+		<div {{bindAttr class=":modal-body errors.title:has-error"}}>
+			<label class="control-label">Title:</label> {{input value=title class="form-control"}}
+			{{#if errors.title}}
+				<span class="help-block">{{errors.title}}</span>
+			{{/if}}
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-success" {{action 'save' view}}>Save</button>
+			<button class="btn btn-danger" {{action 'cancel' view}}>Cancel</button>
+		</div>
+	</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+<% } else if (zurbFoundation) { %>
+<h2>Todo</h2>
+
+<div {{bindAttr class="errors.title:has-error"}}>
+	<label class="control-label">Title:</label> {{input value=title class="form-control"}}
+	{{#if errors.title}}
+		<span class="help-block">{{errors.title}}</span>
+	{{/if}}
+</div>
+
+<div>
+	<button class="btn btn-success" {{action 'save' view}}>Save</button>
+	<button class="btn btn-danger" {{action 'cancel' view}}>Cancel</button>
+</div>
+<a class="close-reveal-modal" {{action 'cancel' view}}>&#215;</a>
+<% } %>

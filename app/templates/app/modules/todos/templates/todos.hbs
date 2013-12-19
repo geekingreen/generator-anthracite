@@ -1,5 +1,28 @@
-{{#each todo in controller}}
-  {{todo-item item=todo}}
-{{/each}}
+<h1>Todos</h1>
 
+<% if (twitterBootstrap) { %>
+<ul class="list-group">
+	{{#each}}
+		<li {{bindAttr class=":list-group-item done"}}>
+			{{input type="checkbox" checked=done}}
+			{{#link-to 'todos.edit' this}}{{title}}{{/link-to}}
+		</li>
+	{{/each}}
+</ul>
+
+{{#link-to 'todos.new' class="btn btn-default"}}New Todo{{/link-to}}
+<button class="btn btn-default" {{action 'removeDone'}}>Remove Done</button>
+<% } else if (zurbFoundation) { %>
+<ul class="todos">
+  {{#each}}
+    <li {{bindAttr class="done"}}>
+      {{input type="checkbox" checked=done}}
+      {{#link-to 'todos.edit' this}}{{title}}{{/link-to}}
+    </li>
+  {{/each}}
+</ul>
+
+{{#link-to 'todos.new' class="button"}}New Todo{{/link-to}}
+<a class="button" {{action 'removeDone'}}>Remove Done</a>
+<% } %>
 {{outlet}}

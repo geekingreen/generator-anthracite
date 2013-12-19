@@ -1,4 +1,3 @@
-'use strict';
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
@@ -7,7 +6,7 @@ var colors = require('colors');
 var AnthraciteGenerator = module.exports = function AnthraciteGenerator(args, options, config) {
 	yeoman.generators.Base.apply(this, arguments);
 
-	this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+	this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'app/index.html'));
 
 	this.on('end', function () {
 		this.installDependencies({
@@ -56,12 +55,12 @@ AnthraciteGenerator.prototype.welcome = function welcome() {
 	console.log(logo, status);
 };
 
-AnthraciteGenerator.prototype.proceed = function proceed() {
+AnthraciteGenerator.prototype.askForAppName = function askForAppName() {
 	var cb = this.async();
 
 	var prompts = [{
 		name: 'appName',
-		message: 'If you would like to rename the app enter the name here, otherwise press enter?'
+		message: 'If you would like to rename the app enter the name here, otherwise press enter:'
 	}];
 
 	this.prompt(prompts, function (err, props) {
@@ -78,55 +77,10 @@ AnthraciteGenerator.prototype.proceed = function proceed() {
 	}.bind(this));
 };
 
-AnthraciteGenerator.prototype.askForMongo = function askForMongo() {
+AnthraciteGenerator.prototype.askForFoundation = function askForFoundation() {
 	var cb = this.async();
 
 	var prompts = [{
-		name: 'mongodb',
-		message: 'Would you like to use mongodb as your backend? [y/n]'
-	}];
-
-	this.prompt(prompts, function (err, props) {
-		if (err) {
-			return this.emit('error', err);
-		}
-
-		this.mongodb = props.mongodb.match(/y/i);
-
-		cb();
-
-	}.bind(this));
-};
-
-AnthraciteGenerator.prototype.askForSQL = function askForSQL() {
-	if (!this.mongodb) {
-		var cb = this.async();
-
-		var prompts = [{
-			name: 'nodeorm',
-			message: 'Would you like to use SQL (MySQL, PostgreSQL, Redshift, SQLite) as your backend? [y/n]'
-		}];
-
-		this.prompt(prompts, function (err, props) {
-			if (err) {
-				return this.emit('error', err);
-			}
-
-			this.nodeorm = props.nodeorm.match(/y/i);
-
-			cb();
-
-		}.bind(this));
-	}
-};
-
-AnthraciteGenerator.prototype.askForAddons = function askForAddons() {
-	var cb = this.async();
-
-	var prompts = [{
-		name: 'epf',
-		message: 'Would you like to use Ember Persistence Foundation instead of Ember Data? [y/n]'
-	}, {
 		name: 'zurbFoundation',
 		message: 'Would you like to use Zurb\'s Foundation framework? [y/n]'
 	}];
@@ -137,7 +91,6 @@ AnthraciteGenerator.prototype.askForAddons = function askForAddons() {
 		}
 
 		this.zurbFoundation = props.zurbFoundation.match(/y/i);
-		this.epf = props.epf.match(/y/i);
 
 		cb();
 
@@ -149,7 +102,7 @@ AnthraciteGenerator.prototype.askForBootstrap = function askForBootstrap() {
 		var cb = this.async();
 
 		var prompts = [{
-			name: 'twbs',
+			name: 'twitterBootstrap',
 			message: 'Would you like to use Twitter Bootstrap 3? [y/n]'
 		}];
 
@@ -158,17 +111,17 @@ AnthraciteGenerator.prototype.askForBootstrap = function askForBootstrap() {
 				return this.emit('error', err);
 			}
 
-			this.twbs = props.twbs.match(/y/i);
+			this.twitterBootstrap = props.twitterBootstrap.match(/y/i);
 
 			cb();
 		}.bind(this));
 	}
 	else {
-		this.twbs = false;
+		this.twitterBootstrap = false;
 	}
 };
 
-AnthraciteGenerator.prototype.askEmpty = function askEmpty() {
+AnthraciteGenerator.prototype.askForEmpty = function askForEmpty() {
 	var cb = this.async();
 
 	var prompts = [{
@@ -186,31 +139,51 @@ AnthraciteGenerator.prototype.askEmpty = function askEmpty() {
 	}.bind(this));
 };
 
+AnthraciteGenerator.prototype.askForServer = function askForServer() {
+	var cb = this.async();
+
+	var prompts = [{
+		name: 'serverExample',
+		message: 'Would you like an example server? [y/n]'
+	}];
+
+	this.prompt(prompts, function (err, props) {
+		if (err) {
+			return this.emit('error', err);
+		}
+
+		this.serverExample = props.serverExample.match(/y/i);
+
+		cb();
+
+	}.bind(this));
+};
+
 AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
-	var cssFiles = ['bower_components/normalize-css/normalize.css'];
+	var cssFiles = [];
 	var jsFiles = [
 		'bower_components/jquery/jquery.js',
 		'bower_components/handlebars/handlebars.runtime.js',
 		'bower_components/ember-shim/ember.js',
-		'bower_components/' + (this.epf ? 'epf-shim/epf.js' : 'ember-data-shim/ember-data.js')
+		'bower_components/ember-data/ember-data.js'
 	];
 
 	if (this.zurbFoundation) {
-		cssFiles.push('assets/styles/bower_components/foundation/scss/foundation.css');
+		cssFiles.push('assets/css/foundation.css');
 		jsFiles.push('bower_components/foundation/js/foundation/foundation.js');
+		jsFiles.push('bower_components/foundation/js/foundation/foundation.reveal.js');
 	}
-	if (this.twbs) {
-		cssFiles.push('bower_components/bootstrap/dist/css/bootstrap.css');
+	if (this.twitterBootstrap) {
+		cssFiles.push('assets/css/bootstrap.css');
 		jsFiles.push('bower_components/bootstrap/dist/js/bootstrap.js');
 	}
 
-	// Put style.css last so that it will override others
-	cssFiles.push('assets/styles/style.css');
+	cssFiles.push('assets/css/main.css');
 
 	this.indexFile = this.appendFiles({
 		html: this.indexFile,
 		fileType: 'css',
-		optimizedPath: 'assets/styles/main.css',
+		optimizedPath: 'assets/css/main.css',
 		sourceFileList: cssFiles,
 		searchPath: 'tmp'
 	});
@@ -223,111 +196,74 @@ AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
 		searchPath: '.'
 	});
 
-	this.indexFile = this.appendFiles(this.indexFile, 'js', 'scripts/main.js', [
-		'app/app.js',
-		'app/compiled-templates.js'
-	], null, ['tmp']);
+	this.indexFile = this.appendFiles({
+		html: this.indexFile,
+		fileType: 'js',
+		optimizedPath: 'scripts/main.js',
+		sourceFileList: [
+			'compiled-templates.js',
+			'application.js'
+		],
+		searchPath: 'tmp'
+	});
 };
 
 AnthraciteGenerator.prototype.app = function app() {
 	this.write('app/index.html', this.indexFile);
 
-	// Copy app
-	this.template('app/app.js');
-	this.template('app/application.hbs');
-	this.template('app/store.js');
-	this.template('app/router.js');
+	// Main application files
+	this.template('index.js');
+	this.template('app.js');
+	this.template('app/application.js');
+	this.template('app/config/store.js');
+	this.template('app/config/router.js');
+
+	// Config and dependency files
+	this.template('package.json');
+	this.template('bower.json');
+
+	this.template('Gruntfile.js');
+	this.directory('grunt');
+
+	this.copy('editorconfig', '.editorconfig');
+	this.copy('jshintrc', '.jshintrc');
+
+	// Unit/Integration test example files
+	this.directory('test');
+
+	this.template('README.md');
 
 	if (!this.empty) {
-		// Components
-		this.template('app/components/todo-item.hbs');
-		this.template('app/components/todo-item.js');
+		this.directory('app/assets');
+		this.directory('app/components');
+		this.directory('app/helpers');
+		this.directory('app/modules');
+		this.directory('app/partials');
 	}
 	else {
+		// Just create the directories if example is declined
+		this.mkdir('app/assets/css');
+		this.mkdir('app/assets/fonts');
+		this.mkdir('app/assets/img');
+
 		this.mkdir('app/components');
-	}
-
-	// Global templates
-	this.mkdir('app/partials');
-	this.mkdir('app/templates');
-
-	if (!this.empty) {
-		// Copy helpers
-		this.template('app/helpers/wordCount.js');
-	}
-	else {
 		this.mkdir('app/helpers');
-	}
+		this.mkdir('app/initializers');
+		this.mkdir('app/mixins');
+		this.mkdir('app/partials');
 
-	if (!this.empty) {
-		// Copy main module
-		this.template('app/modules/main/controllers/application.js');
-		this.template('app/modules/main/controllers/about.js');
-		this.template('app/modules/main/models/site.js');
-		this.template('app/modules/main/partials/link.hbs');
-		this.template('app/modules/main/routes/application.js');
-		this.template('app/modules/main/templates/index.hbs');
-		this.template('app/modules/main/templates/about.hbs');
-		this.template('app/modules/main/templates/contact.hbs');
-		this.template('app/modules/main/views/index.js');
-
-		// Copy todos module
-		this.template('app/modules/todos/controllers/todos.js');
-		this.template('app/modules/todos/controllers/index.js');
-		this.template('app/modules/todos/models/todo.js');
-		this.template('app/modules/todos/routes/todos.js');
-		this.template('app/modules/todos/templates/index.hbs');
-		this.template('app/modules/todos/templates/todos.hbs');
-	}
-	else {
-		this.mkdir('app/modules');
-		this.mkdir('app/modules/main');
-		this.mkdir('app/modules/main/controllers');
-		this.mkdir('app/modules/main/models');
-		this.mkdir('app/modules/main/partials');
-		this.mkdir('app/modules/main/routes');
-		this.mkdir('app/modules/main/templates');
-		this.mkdir('app/modules/main/views');
+		this.mkdir('app/modules/application/controllers');
+		this.mkdir('app/modules/application/models');
+		this.mkdir('app/modules/application/partials');
+		this.mkdir('app/modules/application/routes');
+		this.mkdir('app/modules/application/templates');
+		this.mkdir('app/modules/application/views');
 	}
 };
 
 AnthraciteGenerator.prototype.server = function server() {
-	if (this.mongodb) {
-		this.template('server/models/message-mongo.js', 'server/models/message.js');
-		this.template('server/mongoapi.js');
+	if (this.serverExample) {
+		this.directory('server');
+		this.template('server.js');
 	}
-
-	if (this.nodeorm) {
-		this.template('server/models/message-orm.js', 'server/models/message.js');
-		this.template('server/mysqlapi.js');
-	}
-};
-
-AnthraciteGenerator.prototype.test = function test() {
-	this.template('test/index.html');
-	this.template('test/main.js');
-	this.template('test/spec/index_spec.js');
-};
-
-AnthraciteGenerator.prototype.assets = function assets() {
-	this.mkdir('assets');
-	this.mkdir('assets/img');
-	this.mkdir('assets/styles');
-	this.mkdir('assets/styles/fonts');
-
-	this.template('assets/styles/style.css');
-};
-
-AnthraciteGenerator.prototype.gruntfile = function gruntfile() {
-	this.template('Gruntfile.js');
-	this.copy('anthracite/grunt.js', 'anthracite/grunt.js');
-};
-
-AnthraciteGenerator.prototype.projectfiles = function projectfiles() {
-	this.template('README.md');
-	this.template('package.json');
-	this.template('bower.json');
-
-	this.copy('editorconfig', '.editorconfig');
-	this.copy('jshintrc', '.jshintrc');
 };

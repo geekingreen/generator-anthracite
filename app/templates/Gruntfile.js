@@ -1,95 +1,28 @@
-'use strict';
-
 module.exports = function (grunt) {
-  // load all grunt tasks
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-  // load the default charcoal grunt configuration
-  var config = require('./anthracite/grunt').config;
+	// Load configuration from individual files in grunt dir
+	require('load-grunt-config')(grunt);
 
-  // if you'd like to modify the default grunt config, do it here
-  // for example:
-  // config.less = { ... }
+	grunt.registerTask('compile', [
+		'clean',
+		'copy',
+		'emberTemplates',
+		<% if (twitterBootstrap) { %>'less',<% } %>
+		<% if (zurbFoundation) { %>'compass',<% } %>
+		'neuter'
+	]);
 
-  // concurrent tasks. customize this instead of the multitasks for faster
-  // builds
-  config.concurrent = {
-    server: [
-      'emberTemplates',
-      'neuter:app',
-      'less:dev',
-      'sass:dev',
-      'copy:dev'
-    ],
-    test: [
-      'emberTemplates',
-      'neuter'
-    ],
-    dist: [
-      'emberTemplates',
-      'neuter:app',
-      'less:dist',
-      'sass:dist',
-      'copy:dist',
-      'imagemin',
-      'svgmin',
-      'htmlmin'
-    ]
-  };
+	grunt.registerTask('build', [
+		'compile',
+		'useminPrepare',
+		'concat',
+		'uglify',
+		'cssmin',
+		'usemin'
+	]);
 
-  grunt.initConfig(config);
+	grunt.registerTask('server', ['compile', 'express:dev', 'watch']);
+	grunt.registerTask('server:dist', ['build', 'express:dist', 'express-keepalive']);
 
-  grunt.renameTask('regarde', 'watch');
-
-  grunt.registerTask('server', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
-    }
-
-    grunt.task.run([
-      'clean:server',
-      'concurrent:server',
-      'livereload-start',
-      'connect:livereload',
-      'open',
-      'watch'
-    ]);
-  });
-
-  grunt.registerTask('test', [
-    'clean:server',
-    'concurrent:test',
-    'copy:dev',
-    'copy:test',
-    'connect:test',
-    'qunit'
-  ]);
-
-  grunt.registerTask('test-server', [
-    'clean:server',
-    'concurrent:test',
-    'copy:dev',
-    'copy:test',
-    'connect:test',
-    'open',
-    'watch'
-  ]);
-
-  grunt.registerTask('build', [
-    'clean:dist',
-    'useminPrepare',
-    'concurrent:dist',
-    'copy:dev',
-    'concat',
-    'cssmin',
-    'uglify',
-    'rev',
-    'usemin'
-  ]);
-
-  grunt.registerTask('default', [
-    'jshint',
-    'test',
-    'build'
-  ]);
+	grunt.registerTask('default', ['server']);
 };

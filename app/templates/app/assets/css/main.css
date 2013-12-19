@@ -1,0 +1,22 @@
+body {
+	margin-top: 70px;
+}
+
+.done {
+	background: #FF9999;
+	text-decoration: line-through;
+}
+
+.todos {
+	list-style: none;
+}
+
+.todos input {
+	margin-bottom: 0px;
+}
+
+.todos li {
+	border: 1px solid #EEE;
+	border-radius: 3px;
+	padding: 0px 5px;
+}

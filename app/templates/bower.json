@@ -1,16 +1,26 @@
 {
-  "name": "<%= _.slugify(appname) %>",
-  "version": "0.1.0",
-  "dependencies": {
-    "ember-shim": "1.0.0",
-    <% if (epf) { %>"epf-shim": "0.1.4",
-    <% } else { %>"ember-data-shim": "1.0.0-beta.2",<% } %>
-    "handlebars": "1.0.0",
-    <% if (zurbFoundation) { %>"foundation": "~4.3.1",<% } %>
-    <% if (twbs) { %>"bootstrap": "3.0.0-rc.2",<% } %>
-    "normalize-css": "~2.1.1"
-  },
-  "devDependencies": {
-    "qunit": "~1.12.0"
-  }
+	"name": "geekingreen.com",
+	"version": "0.0.0",
+	"authors": [
+		"Author Name <email@email.com>"
+	],
+	"main": "app.js",
+	"license": "MIT",
+	"homepage": "http://geekingreen.com",
+	"private": true,
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"jquery": "~2.0.3",
+		"ember-shim": "~1.2.0",
+		<% if (twitterBootstrap) { %>"bootstrap": "3.0.2",<% } %>
+		<% if (zurbFoundation) { %>"foundation": "~5.0.2",<% } %>
+		"ember-data": "1.0.0-beta.3",
+		"handlebars": "~1.1.2"
+	}
 }
