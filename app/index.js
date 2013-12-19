@@ -171,6 +171,7 @@ AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
 	if (this.zurbFoundation) {
 		cssFiles.push('assets/css/foundation.css');
 		jsFiles.push('bower_components/foundation/js/foundation/foundation.js');
+		jsFiles.push('bower_components/foundation/js/foundation/foundation.topbar.js');
 		jsFiles.push('bower_components/foundation/js/foundation/foundation.reveal.js');
 	}
 	if (this.twitterBootstrap) {

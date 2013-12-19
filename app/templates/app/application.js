@@ -1,4 +1,4 @@
-window.<%= _.classify(appname) %> = Ember.Application.create({});
+window.<%= _.classify(appname) %> = Ember.Application.create();
 
 // These requires will be appended to this file using grunt-neuter
 require('./initializers/*');

@@ -1,5 +1,5 @@
 body {
-	margin-top: 70px;
+	<% if (twitterBootstrap) { %>margin-top: 70px;<% } %>
 }
 
 .done {
