@@ -1,36 +1,37 @@
 {
-  "name": "generator-anthracite",
-  "version": "0.3.1",
-  "description": "Another take on an Ember generator for Yeoman",
-  "keywords": [
-    "yeoman-generator"
-  ],
-  "homepage": "https://github.com/geekingreen/generator-anthracite",
-  "bugs": "https://github.com/geekingreen/generator-anthracite/issues",
-  "author": {
-    "name": "Isaac Gifford",
-    "email": "isaac@geekingreen.com",
-    "url": "https://github.com/geekingreen"
-  },
-  "main": "app/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/geekingreen/generator-anthracite.git"
-  },
-  "scripts": {
-    "test": "mocha"
-  },
-  "dependencies": {
-    "yeoman-generator": "~0.10.2",
-    "colors": "~0.6.2"
-  },
-  "engines": {
-    "node": ">=0.8.0"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://en.wikipedia.org/wiki/MIT_License"
-    }
-  ]
+	"name": "generator-anthracite",
+	"version": "0.3.1",
+	"description": "Another take on an Ember generator for Yeoman",
+	"keywords": [
+		"yeoman-generator",
+		"ember",
+		"generator",
+		"anthracite"
+	],
+	"homepage": "https://github.com/geekingreen/generator-anthracite",
+	"bugs": "https://github.com/geekingreen/generator-anthracite/issues",
+	"author": {
+		"name": "Isaac Gifford",
+		"email": "isaac@geekingreen.com",
+		"url": "https://github.com/geekingreen"
+	},
+	"main": "app/index.js",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/geekingreen/generator-anthracite.git"
+	},
+	"scripts": {
+		"test": "mocha"
+	},
+	"dependencies": {
+		"yeoman-generator": "~0.10.2",
+		"colors": "~0.6.2"
+	},
+	"engines": {
+		"node": ">=0.8.0"
+	},
+	"licenses": [{
+		"type": "MIT",
+		"url": "http://en.wikipedia.org/wiki/MIT_License"
+	}]
 }

@@ -22,6 +22,7 @@ util.inherits(AnthraciteGenerator, yeoman.generators.Base);
 AnthraciteGenerator.prototype.welcome = function welcome() {
 	// welcome message
 	var logo =
+		'\n Generator Anthracte v' + this.pkg.version +
 		'\n              ..............' +
 		'\n           ....................' +
 		'\n       ..........................`' +
@@ -63,62 +64,40 @@ AnthraciteGenerator.prototype.askForAppName = function askForAppName() {
 		message: 'If you would like to rename the app enter the name here, otherwise press enter:'
 	}];
 
-	this.prompt(prompts, function (err, props) {
-		if (err) {
-			return this.emit('error', err);
-		}
-
-		if (props.appName.trim().length) {
-			this.appname = props.appName;
+	this.prompt(prompts, function (answers) {
+		if (answers.appName.trim().length) {
+			this.appname = answers.appName;
 		}
 
 		cb();
-
 	}.bind(this));
 };
 
-AnthraciteGenerator.prototype.askForFoundation = function askForFoundation() {
+AnthraciteGenerator.prototype.askForUI = function askForUI() {
 	var cb = this.async();
 
 	var prompts = [{
-		name: 'zurbFoundation',
-		message: 'Would you like to use Zurb\'s Foundation framework? [y/n]'
+		type: 'list',
+		name: 'ui',
+		message: 'Would you like to use any UI frameworks?',
+		choices: [{
+			name: 'Twitter Bootstrap',
+			value: 2
+		}, {
+			name: 'Zurb Foundation',
+			value: 1
+		}, {
+			name: 'None',
+			value: 0
+		}]
 	}];
 
-	this.prompt(prompts, function (err, props) {
-		if (err) {
-			return this.emit('error', err);
-		}
-
-		this.zurbFoundation = props.zurbFoundation.match(/y/i);
+	this.prompt(prompts, function (answers) {
+		this.twitterBootstrap = (answers.ui === 2);
+		this.zurbFoundation = (answers.ui === 1);
 
 		cb();
-
 	}.bind(this));
-};
-
-AnthraciteGenerator.prototype.askForBootstrap = function askForBootstrap() {
-	if (!this.zurbFoundation) {
-		var cb = this.async();
-
-		var prompts = [{
-			name: 'twitterBootstrap',
-			message: 'Would you like to use Twitter Bootstrap 3? [y/n]'
-		}];
-
-		this.prompt(prompts, function (err, props) {
-			if (err) {
-				return this.emit('error', err);
-			}
-
-			this.twitterBootstrap = props.twitterBootstrap.match(/y/i);
-
-			cb();
-		}.bind(this));
-	}
-	else {
-		this.twitterBootstrap = false;
-	}
 };
 
 AnthraciteGenerator.prototype.askForEmpty = function askForEmpty() {
@@ -129,12 +108,9 @@ AnthraciteGenerator.prototype.askForEmpty = function askForEmpty() {
 		message: 'Would you like an example application? [y/n]'
 	}];
 
-	this.prompt(prompts, function (err, props) {
-		if (err) {
-			return this.emit('error', err);
-		}
+	this.prompt(prompts, function (answers) {
+		this.empty = answers.empty.match(/n/i);
 
-		this.empty = props.empty.match(/n/i);
 		cb();
 	}.bind(this));
 };
@@ -147,15 +123,10 @@ AnthraciteGenerator.prototype.askForServer = function askForServer() {
 		message: 'Would you like an example server? [y/n]'
 	}];
 
-	this.prompt(prompts, function (err, props) {
-		if (err) {
-			return this.emit('error', err);
-		}
-
-		this.serverExample = props.serverExample.match(/y/i);
+	this.prompt(prompts, function (answers) {
+		this.serverExample = answers.serverExample.match(/y/i);
 
 		cb();
-
 	}.bind(this));
 };
 
@@ -233,15 +204,15 @@ AnthraciteGenerator.prototype.app = function app() {
 
 	this.template('README.md');
 
+	// Base directories
+	this.directory('app/components');
+	this.directory('app/helpers');
+	this.directory('app/initializers');
+	this.directory('app/mixins');
+	this.directory('app/partials');
+
 	if (!this.empty) {
 		this.directory('app/assets');
-
-		this.directory('app/components');
-		this.directory('app/helpers');
-		this.directory('app/initializers');
-		this.directory('app/mixins');
-		this.directory('app/partials');
-
 		this.directory('app/modules');
 	}
 	else {
@@ -249,12 +220,6 @@ AnthraciteGenerator.prototype.app = function app() {
 		this.mkdir('app/assets/css');
 		this.mkdir('app/assets/fonts');
 		this.mkdir('app/assets/img');
-
-		this.mkdir('app/components');
-		this.mkdir('app/helpers');
-		this.mkdir('app/initializers');
-		this.mkdir('app/mixins');
-		this.mkdir('app/partials');
 
 		this.mkdir('app/modules/application/controllers');
 		this.mkdir('app/modules/application/models');
