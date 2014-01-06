@@ -24,7 +24,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "yeoman-generator": "~0.10.2",
+    "yeoman-generator": "~0.15.0",
     "colors": "~0.6.2"
   },
   "engines": {
