@@ -17,14 +17,30 @@ var ModuleGenerator = module.exports = function ModuleGenerator(args, options, c
 
 util.inherits(ModuleGenerator, yeoman.generators.NamedBase);
 
-ModuleGenerator.prototype.module = function module() {
-  this.underscored = this._.underscored(this.name);
+ModuleGenerator.prototype.askForAppName = function askForAppName() {
+	var cb = this.async();
 
-  var directory = "app/modules/" + this.name.toLowerCase() + "/";
+	var prompts = [{
+		name: 'appName',
+		message: 'What is the root namespace of your application:'
+	}];
+
+	this.prompt(prompts, function (answers) {
+		if (answers.appName.trim().length) {
+			this.appname = answers.appName;
+		}
+
+		cb();
+	}.bind(this));
+};
+
+ModuleGenerator.prototype.module = function module() {
+  var directory = "app/modules/" + this.name.toLowerCase() + "/",
+    underscored = this._.underscored(this.name);
 
   this.template('routes/index.js', directory + 'routes/index.js');
   this.template('controllers/index.js', directory + 'controllers/index.js');
   this.template('views/index.js', directory + 'views/index.js');
-  this.template('models/model.js', directory + 'models/' + this.underscored + '.js');
+  this.template('models/model.js', directory + 'models/' + underscored + '.js');
   this.template('templates/index.hbs', directory + 'templates/index.hbs');
 };
