@@ -1,12 +1,12 @@
 {
-	"name": "geekingreen.com",
+	"name": "<%= appname %>",
 	"version": "0.0.0",
 	"authors": [
 		"Author Name <email@email.com>"
 	],
 	"main": "app.js",
 	"license": "MIT",
-	"homepage": "http://geekingreen.com",
+	"homepage": "http://example.com",
 	"private": true,
 	"ignore": [
 		"**/.*",
