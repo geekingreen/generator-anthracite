@@ -35,12 +35,13 @@ ModuleGenerator.prototype.askForAppName = function askForAppName() {
 };
 
 ModuleGenerator.prototype.module = function module() {
-  var directory = "app/modules/" + this.name.toLowerCase() + "/",
+  var lower = this.name.toLowerCase(), 
+    directory = "app/modules/" + lower + "/",
     underscored = this._.underscored(this.name);
 
-  this.template('routes/index.js', directory + 'routes/index.js');
-  this.template('controllers/index.js', directory + 'controllers/index.js');
-  this.template('views/index.js', directory + 'views/index.js');
+  this.template('routes/index.js', directory + 'routes/' + lower + '.js');
+  this.template('controllers/index.js', directory + 'controllers/' + lower + '.js');
+  this.template('views/index.js', directory + 'views/' + lower + '.js');
   this.template('models/model.js', directory + 'models/' + underscored + '.js');
-  this.template('templates/index.hbs', directory + 'templates/index.hbs');
+  this.template('templates/index.hbs', directory + 'templates/' + lower + '.hbs');
 };
