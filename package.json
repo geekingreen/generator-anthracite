@@ -1,6 +1,6 @@
 {
   "name": "generator-anthracite",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Another take on an Ember generator for Yeoman",
   "keywords": [
     "yeoman-generator",
