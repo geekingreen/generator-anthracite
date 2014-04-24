@@ -135,7 +135,7 @@ AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
 	var jsFiles = [
 		'bower_components/jquery/jquery.js',
 		'bower_components/handlebars/handlebars.runtime.js',
-		'bower_components/ember-shim/ember.js',
+		'bower_components/ember/ember.js',
 		'bower_components/ember-data/ember-data.js'
 	];
 
@@ -205,15 +205,23 @@ AnthraciteGenerator.prototype.app = function app() {
 	this.template('README.md');
 
 	// Base directories
-	this.directory('app/components');
-	this.directory('app/helpers');
 	this.directory('app/initializers');
-	this.directory('app/mixins');
-	this.directory('app/partials');
 
 	if (!this.empty) {
-		this.directory('app/assets');
+    if (this.twitterBootstrap) {
+		  this.directory('app/assets/css/bootstrap');
+      this.copy('app/assets/css/bootstrap.less');
+    }
+    if (this.zurbFoundation) {
+      this.directory('app/assets/css/foundation');
+      this.copy('app/assets/css/foundation.scss');
+    }
+    this.copy('app/assets/css/main.css');
+    this.directory('app/components');
+    this.directory('app/helpers');
+    this.directory('app/mixins');
 		this.directory('app/modules');
+    this.directory('app/partials');
 	}
 	else {
 		// Just create the directories if example is declined
@@ -227,6 +235,11 @@ AnthraciteGenerator.prototype.app = function app() {
 		this.mkdir('app/modules/application/routes');
 		this.mkdir('app/modules/application/templates');
 		this.mkdir('app/modules/application/views');
+    
+    this.mkdir('app/components');
+    this.mkdir('app/helpers');
+    this.mkdir('app/mixins');
+    this.mkdir('app/partials');
 	}
 };
 
