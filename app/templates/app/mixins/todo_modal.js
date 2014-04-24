@@ -11,6 +11,8 @@
 			controller.transitionToRoute('todos.index');
 		});
 		modal.$().foundation('reveal', 'close');
+		<% } else if (semanticUI) { %>
+		controller.transitionToRoute('todos.index');
 		<% } %>
 	}
 });

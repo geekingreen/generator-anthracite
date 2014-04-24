@@ -5,7 +5,7 @@
 				person = this.get('model');
 
 			person.save().then(function () {
-				controller.closeModal.call(controller, modal);
+				controller.closeModal(modal);
 			});
 		},
 
@@ -14,21 +14,7 @@
 
 			person.rollback();
 
-			this.closeModal.call(this, modal);
+			this.closeModal(modal);
 		}
 	}
 });
-
-function hideModal(modal, controller) {
-	<% if (twitterBootstrap) { %>
-	modal.$().on('hidden.bs.modal', function () {
-		controller.transitionToRoute('todos.index');
-	});
-	modal.$().modal('hide');
-	<% } else if (zurbFoundation) { %>
-	modal.$().on('closed', function () {
-		controller.transitionToRoute('todos.index');
-	});
-	modal.$().foundation('reveal', 'close');
-	<% } %>
-}

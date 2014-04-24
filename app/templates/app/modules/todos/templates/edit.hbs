@@ -5,7 +5,7 @@
 			<button type="button" class="close" aria-hidden="true" {{action 'cancel' view}}>&times;</button>
 			<h4 class="modal-title">Todo</h4>
 		</div>
-		<div {{bindAttr class=":modal-body errors.title:has-error"}}>
+		<div {{bind-attr class=":modal-body errors.title:has-error"}}>
 			<label class="control-label">Title:</label> {{input value=title class="form-control"}}
 			{{#if errors.title}}
 				<span class="help-block">{{errors.title}}</span>
@@ -20,7 +20,7 @@
 <% } else if (zurbFoundation) { %>
 <h2>Todo</h2>
 
-<div {{bindAttr class="errors.title:has-error"}}>
+<div {{bind-attr class="errors.title:has-error"}}>
 	<label class="control-label">Title:</label> {{input value=title class="form-control"}}
 	{{#if errors.title}}
 		<span class="help-block">{{errors.title}}</span>
@@ -32,4 +32,24 @@
 	<button class="btn btn-danger" {{action 'cancel' view}}>Cancel</button>
 </div>
 <a class="close-reveal-modal" {{action 'cancel' view}}>&#215;</a>
+<% } else if (semanticUI) { %>
+<i class="close deny icon" {{action 'cancel' view}}></i>
+<div class="header">
+	Todo
+</div>
+<div class="content">
+<div class="ui form">
+	<div {{bind-attr class=":field errors.title:error"}}>
+		<label>Title</label>
+		{{input value=title}}
+		{{#if errors.title}}
+		<div class="ui red pointing above label">{{errors.title}}<div>
+		{{/if}}
+	</div>
+</div>
+</div>
+<div class="actions">
+	<button class="ui approve button" {{action 'save' view}}>Save</button>
+	<button class="ui deny button" {{action 'cancel' view}}>Cancel</button>
+</div>
 <% } %>

@@ -5,6 +5,7 @@ require('./initializers/*');
 require('./helpers/*');
 require('./mixins/*');
 
+require('./components/*');
 require('./modules/*/models/*');
 require('./modules/*/routes/*');
 require('./modules/*/controllers/*');

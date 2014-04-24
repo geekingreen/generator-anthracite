@@ -48,4 +48,21 @@
 		{{outlet}}
 	</div>
 </div>
+<% } else if (semanticUI) { %>
+<div class="ui one column page grid">
+	<div class="column">
+		<div class="ui menu">
+			{{#link-to 'index' class='item'}}Home{{/link-to}}
+			{{#link-to 'todos' class='item'}}Todos{{/link-to}}
+			{{#link-to 'about' class='item'}}About{{/link-to}}
+			{{#link-to 'contact' class='item'}}Contact{{/link-to}}
+		</div>
+	</div>
+</div>
+
+<div class="ui one column page grid">
+	<div class="column">
+	{{outlet}}
+	</div>
+</div>
 <% } %>

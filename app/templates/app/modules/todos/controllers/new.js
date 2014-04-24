@@ -1,11 +1,11 @@
-<%= _.classify(appname) %>.TodosNewController = Ember.ObjectController.extend({
+<%= _.classify(appname) %>.TodosNewController = Ember.ObjectController.extend(<%= _.classify(appname) %>.TodoModalMixin, {
 	actions: {
 		save: function (modal) {
 			var controller = this,
 				person = this.get('model');
 
 			person.save().then(function () {
-				hideModal(modal, controller);
+				controller.closeModal(modal);
 			});
 		},
 
@@ -14,21 +14,8 @@
 
 			person.deleteRecord();
 
-			hideModal(modal, this);
+			this.closeModal(modal);
 		}
 	}
 });
 
-function hideModal(modal, controller) {
-	<% if (twitterBootstrap) { %>
-	modal.$().on('hidden.bs.modal', function () {
-		controller.transitionToRoute('todos.index');
-	});
-	modal.$().modal('hide');
-	<% } else if (zurbFoundation) { %>
-	modal.$().on('closed', function () {
-		controller.transitionToRoute('todos.index');
-	});
-	modal.$().foundation('reveal', 'close');
-	<% } %>
-}

@@ -5,14 +5,21 @@
 	{{#each}}{{todo-item todo=this}}{{/each}}
 </ul>
 
-{{#link-to 'todos.new' class="btn btn-default"}}New Todo{{/link-to}}
+{{#link-to 'todos.new' class='btn btn-default'}}New Todo{{/link-to}}
 <button class="btn btn-default" {{action 'removeDone'}}>Remove Done</button>
 <% } else if (zurbFoundation) { %>
 <ul class="todos">
 	{{#each}}{{todo-item todo=this}}{{/each}}
 </ul>
 
-{{#link-to 'todos.new' class="button"}}New Todo{{/link-to}}
+{{#link-to 'todos.new' class='button'}}New Todo{{/link-to}}
 <a class="button" {{action 'removeDone'}}>Remove Done</a>
+<% } else if (semanticUI) { %>
+<div class="ui link celled list">
+		{{#each}}{{todo-item todo=this}}{{/each}}
+</div>
+
+{{#link-to 'todos.new' class='ui blue button'}}New Todo{{/link-to}}
+<a class="ui blue button" {{action 'removeDone'}}>Remove Done</a>
 <% } %>
 {{outlet}}

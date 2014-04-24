@@ -81,6 +81,9 @@ AnthraciteGenerator.prototype.askForUI = function askForUI() {
 		name: 'ui',
 		message: 'Would you like to use any UI frameworks?',
 		choices: [{
+			name: 'Semantic UI',
+			value: 3
+		}, {
 			name: 'Twitter Bootstrap',
 			value: 2
 		}, {
@@ -93,6 +96,7 @@ AnthraciteGenerator.prototype.askForUI = function askForUI() {
 	}];
 
 	this.prompt(prompts, function (answers) {
+		this.semanticUI = (answers.ui === 3);
 		this.twitterBootstrap = (answers.ui === 2);
 		this.zurbFoundation = (answers.ui === 1);
 
@@ -139,15 +143,19 @@ AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
 		'bower_components/ember-data/ember-data.js'
 	];
 
+	if (this.semanticUI) {
+		cssFiles.push('bower_components/semantic-ui/build/packaged/css/semantic.min.css');
+		jsFiles.push('bower_components/semantic-ui/build/packaged/javascript/semantic.min.js');
+	}
+	if (this.twitterBootstrap) {
+		cssFiles.push('assets/css/bootstrap.css');
+		jsFiles.push('bower_components/bootstrap/dist/js/bootstrap.js');
+	}
 	if (this.zurbFoundation) {
 		cssFiles.push('assets/css/foundation.css');
 		jsFiles.push('bower_components/foundation/js/foundation/foundation.js');
 		jsFiles.push('bower_components/foundation/js/foundation/foundation.topbar.js');
 		jsFiles.push('bower_components/foundation/js/foundation/foundation.reveal.js');
-	}
-	if (this.twitterBootstrap) {
-		cssFiles.push('assets/css/bootstrap.css');
-		jsFiles.push('bower_components/bootstrap/dist/js/bootstrap.js');
 	}
 
 	cssFiles.push('assets/css/main.css');
