@@ -5,10 +5,10 @@
 			<button type="button" class="close" aria-hidden="true" {{action 'cancel' view}}>&times;</button>
 			<h4 class="modal-title">Todo</h4>
 		</div>
-		<div {{bind-attr class=":modal-body errors.title:has-error"}}>
-			<label class="control-label">Title:</label> {{input value=title class="form-control"}}
-			{{#if errors.title}}
-				<span class="help-block">{{errors.title}}</span>
+		<div {{bind-attr class=":modal-body model.errors.title:has-error"}}>
+			<label class="control-label">Title:</label> {{input value=model.title class="form-control"}}
+			{{#if model.errors.title}}
+				<span class="help-block">{{model.errors.title}}</span>
 			{{/if}}
 		</div>
 		<div class="modal-footer">
@@ -20,10 +20,10 @@
 <% } else if (zurbFoundation) { %>
 <h2>Todo</h2>
 
-<div {{bind-attr class="errors.title:has-error"}}>
-	<label class="control-label">Title:</label> {{input value=title class="form-control"}}
-	{{#if errors.title}}
-		<span class="help-block">{{errors.title}}</span>
+<div {{bind-attr class="model.errors.title:has-error"}}>
+	<label class="control-label">Title:</label> {{input value=model.title class="form-control"}}
+	{{#if model.errors.title}}
+		<span class="help-block">{{model.errors.title}}</span>
 	{{/if}}
 </div>
 
@@ -39,11 +39,11 @@
 </div>
 <div class="content">
 <div class="ui form">
-	<div {{bind-attr class=":field errors.title:error"}}>
+	<div {{bind-attr class=":field model.errors.title:error"}}>
 		<label>Title</label>
-		{{input value=title}}
-		{{#if errors.title}}
-		<div class="ui red pointing above label">{{errors.title}}<div>
+		{{input value=model.title}}
+		{{#if model.errors.title}}
+		<div class="ui red pointing above label">{{model.errors.title}}</div>
 		{{/if}}
 	</div>
 </div>

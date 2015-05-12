@@ -12,25 +12,26 @@
 	},
 	"author": "Author Name <email@email.com>",
 	"dependencies": {
-		"express": "~3.4.4",
+		"express": "~4.12.3",
+		"body-parser": "~1.12.4",
 		"orm": "~2.1.3",
-		"mysql": "~2.0.0-alpha9",
-		"natural": "~0.1.24"
+		"mysql": "~2.6.2",
+		"natural": "~0.2.1"
 	},
 	"devDependencies": {
 		"grunt": "~0.4.4",
-		"grunt-contrib-clean": "~0.5.0",
-		"grunt-contrib-compass": "~0.5.0",
-		"grunt-contrib-concat": "~0.4.0",
-		"grunt-contrib-copy": "~0.5.0",
-		"grunt-contrib-cssmin": "~0.9.0",
-		"grunt-contrib-less": "~0.11.0",
-		"grunt-contrib-uglify": "~0.4.0",
+		"grunt-contrib-clean": "~0.6.0",
+		"grunt-contrib-compass": "~1.0.3",
+		"grunt-contrib-concat": "~0.5.1",
+		"grunt-contrib-copy": "~0.8.0",
+		"grunt-contrib-cssmin": "~0.12.3",
+		"grunt-contrib-less": "~1.0.1",
+		"grunt-contrib-uglify": "~0.9.1",
 		"grunt-ember-templates": "~0.5.0-alpha",
-		"grunt-express": "~1.2.1",
+		"grunt-express": "~1.4.1",
 		"grunt-neuter": "~0.6.0",
-		"grunt-usemin": "~2.1.1",
-		"load-grunt-config": "~0.8.0",
-		"sqlite3": "~2.2.3"
+		"grunt-usemin": "~3.0.0",
+		"load-grunt-config": "~0.17.1",
+		"sqlite3": "~3.0.8"
 	}
 }

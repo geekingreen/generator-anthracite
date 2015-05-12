@@ -1,11 +1,10 @@
 var NODE_ENV = process.env.NODE_ENV,
+	bodyParser = require('body-parser'),
 	express = require('express'),
 	server = express();
 
-server.configure(function() {
-	server.use(express.json());
-	server.use(express.urlencoded());
-});
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: false }));
 
 require('./app')(server);
 <% if(serverExample) { %>require('./server')(server);<% } %>

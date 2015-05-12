@@ -16,12 +16,12 @@
 		"tests"
 	],
 	"dependencies": {
-		"jquery": "~2.0.3",
-		"ember": "~1.9.0",
-		<% if (twitterBootstrap) { %>"bootstrap": "~3.1.1",<% } %>
-		<% if (zurbFoundation) { %>"foundation": "~5.2.2",<% } %>
-		<% if (semanticUI) { %>"semantic-ui": "~0.16.1",<% } %>
-		"ember-data": "1.0.0-beta.7",
-		"handlebars": "~2.0.0"
+		"jquery": "~2.1.4",
+		"ember": "~1.12.0-beta.3",
+		<% if (twitterBootstrap) { %>"bootstrap": "~3.3.4",<% } %>
+		<% if (zurbFoundation) { %>"foundation": "~5.5.2",<% } %>
+		<% if (semanticUI) { %>"semantic-ui": "~1.12.2",<% } %>
+		"ember-data": "1.0.0-beta.17",
+		"handlebars": "~3.0.3"
 	}
 }

@@ -7,7 +7,7 @@
 		});
 		modal.$().modal('hide');
 		<% } else if (zurbFoundation) { %>
-		modal.$().on('closed', function () {
+		modal.$().on('closed.fndtn.reveal', function () {
 			controller.transitionToRoute('todos.index');
 		});
 		modal.$().foundation('reveal', 'close');

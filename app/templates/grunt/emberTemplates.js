@@ -1,5 +1,7 @@
 module.exports = {
 	options: {
+		templateCompilerPath: 'bower_components/ember/ember-template-compiler.js',
+		handlebarsPath: 'bower_components/handlebars/handlebars.js',
 		preprocess: function (source) {
 			return source.replace(/\s+/g, ' ');
 		},

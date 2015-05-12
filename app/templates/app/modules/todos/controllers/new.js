@@ -1,18 +1,18 @@
-<%= _.classify(appname) %>.TodosNewController = Ember.ObjectController.extend(<%= _.classify(appname) %>.TodoModalMixin, {
+<%= _.classify(appname) %>.TodosNewController = Ember.Controller.extend(<%= _.classify(appname) %>.TodoModalMixin, {
 	actions: {
 		save: function (modal) {
 			var controller = this,
-				person = this.get('model');
+				todo = this.get('model');
 
-			person.save().then(function () {
+			todo.save().then(function () {
 				controller.closeModal(modal);
 			});
 		},
 
 		cancel: function (modal) {
-			var person = this.get('model');
+			var todo = this.get('model');
 
-			person.deleteRecord();
+			todo.deleteRecord();
 
 			this.closeModal(modal);
 		}

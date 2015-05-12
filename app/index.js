@@ -137,15 +137,15 @@ AnthraciteGenerator.prototype.askForServer = function askForServer() {
 AnthraciteGenerator.prototype.writeIndex = function writeIndex() {
 	var cssFiles = [];
 	var jsFiles = [
-		'bower_components/jquery/jquery.js',
+		'bower_components/jquery/dist/jquery.js',
 		'bower_components/handlebars/handlebars.runtime.js',
 		'bower_components/ember/ember.js',
 		'bower_components/ember-data/ember-data.js'
 	];
 
 	if (this.semanticUI) {
-		cssFiles.push('bower_components/semantic-ui/build/packaged/css/semantic.min.css');
-		jsFiles.push('bower_components/semantic-ui/build/packaged/javascript/semantic.min.js');
+		cssFiles.push('bower_components/semantic-ui/dist/semantic.min.css');
+		jsFiles.push('bower_components/semantic-ui/dist/semantic.min.js');
 	}
 	if (this.twitterBootstrap) {
 		cssFiles.push('assets/css/bootstrap.css');
@@ -243,7 +243,7 @@ AnthraciteGenerator.prototype.app = function app() {
 		this.mkdir('app/modules/application/routes');
 		this.mkdir('app/modules/application/templates');
 		this.mkdir('app/modules/application/views');
-    
+
     this.mkdir('app/components');
     this.mkdir('app/helpers');
     this.mkdir('app/mixins');
